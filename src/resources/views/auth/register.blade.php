@@ -13,11 +13,26 @@
       @csrf
       <div class="form__group">
         <div class="form__group-title">
+          <span class="form__label--item">名前</span>
+        </div>
+        <div class="form__group-content">
+          <div class="form__input--text">
+            <input type="name" name="name" value="{{ old('name') }}">
+          </div>
+          <div class="form__error">
+            @error('name')
+              {{ $message }}
+            @enderror
+          </div>
+        </div>
+      </div>
+      <div class="form__group">
+        <div class="form__group-title">
           <span class="form__label--item">メールアドレス</span>
         </div>
         <div class="form__group-content">
           <div class="form__input--text">
-            <input type="email" name="email" value="{{ old('email') }}" />
+            <input type="email" name="email" value="{{ old('email') }}">
           </div>
           <div class="form__error">
             @error('email')
@@ -32,7 +47,22 @@
         </div>
         <div class="form__group-content">
           <div class="form__input--text">
-            <input type="password" name="password" />
+            <input type="password" name="password" value="{{ old('password') }}">
+          </div>
+          <div class="form__error">
+            @error('password')
+              {{ $message }}
+            @enderror
+          </div>
+        </div>
+      </div>
+      <div class="form__group">
+        <div class="form__group-title">
+          <span class="form__label--item">パスワード確認</span>
+        </div>
+        <div class="form__group-content">
+          <div class="form__input--text">
+            <input type="password" name="password" value="{{ old('password') }}">
           </div>
           <div class="form__error">
             @error('password')
