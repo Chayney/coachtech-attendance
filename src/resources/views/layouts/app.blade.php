@@ -30,7 +30,7 @@
                         <li class="nav_item">
                             <form action="/logout" method="post">
                                 @csrf
-                                <button class="logout">ログアウト</button>
+                                <button type="submit" class="logout">ログアウト</button>
                             </form>
                         </li>
                     </ul>
@@ -59,7 +59,7 @@
                         <li class="header-nav__item">
                             <form action="/logout" method="post">
                                 @csrf
-                                <button class="header-nav__button">ログアウト</button>
+                                <button type="submit" class="header-nav__button">ログアウト</button>
                             </form>
                         </li>
                     </ul>
