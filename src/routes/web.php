@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AttendanceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +14,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::middleware(['auth'])->group(function () {
+    // 勤怠登録ページ
+    Route::get('/attendance', [AttendanceController::class, 'index']);
+    Route::post('/commute', [AttendanceController::class, 'commute']);
+    Route::post('/rest/start', [AttendanceController::class, 'breakIn']);
+    Route::patch('/rest/end', [AttendanceController::class, 'breakOut']);
+    Route::patch('/leave', [AttendanceController::class, 'leave']);
 });
