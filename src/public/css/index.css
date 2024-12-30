@@ -1,0 +1,105 @@
+.container {
+    margin-top: 10%;
+    text-align: center;
+}
+
+.status {
+    width: 30%;
+    background-color: #ddd;
+    border-radius: 80px;
+    padding: 10px 20px;
+}
+
+.date {
+    line-height: 80px;
+}
+
+.current {
+    font-size: 60px;
+}
+
+.commute-btn {
+    line-height: 180px;
+}
+
+.commute {
+    width: 10%;
+    background-color: #000;
+    border-radius: 15px;
+    padding: 10px 20px;
+    font-size: 20px;
+    font-weight: bold;
+    color: #fff;
+}
+
+.break-btn {
+    line-height: 180px;
+}
+
+.break {
+    width: 10%;
+    background-color: #fff;
+    border-radius: 15px;
+    padding: 10px 20px;
+    font-size: 20px;
+    font-weight: bold;
+    color: #000;
+}
+
+.btn-group {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin: 0 auto;
+    width: 50%;
+}
+
+.punch-btn {
+    line-height: 180px;
+    width: 20%;
+}
+
+.punch {
+    width: 100%;
+    background-color: #000;
+    border-radius: 15px;
+    padding: 10px 20px;
+    font-size: 20px;
+    font-weight: bold;
+    color: #fff;
+}
+
+.rest-btn {
+    line-height: 180px;
+    width: 20%;
+}
+
+.rest {
+    width: 100%;
+    background-color: #fff;
+    border-radius: 15px;
+    padding: 10px 20px;
+    font-size: 20px;
+    font-weight: bold;
+    color: #000;
+}
+
+.commute-btn {
+    line-height: 180px;
+}
+
+.commute {
+    width: 10%;
+    background-color: #fff;
+    border-radius: 15px;
+    padding: 10px 20px;
+    font-size: 20px;
+    font-weight: bold;
+    color: #000;
+}
+
+.done {
+    line-height: 180px;
+    font-size: 20px;
+    font-weight: bold;
+}
