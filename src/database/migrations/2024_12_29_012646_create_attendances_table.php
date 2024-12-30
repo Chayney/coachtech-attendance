@@ -19,7 +19,6 @@ class CreateAttendancesTable extends Migration
             $table->date('date');
             $table->time('commute');
             $table->time('leave')->nullable();
-            $table->time('rest')->nullable();
             $table->time('break_time')->nullable();
             $table->time('work_time')->nullable();
             $table->timestamps();
