@@ -15,7 +15,7 @@
                 <input type="hidden" name="user_id">
                 <button class="commute" type="submit">出勤</button>
             </form>
-        @elseif (!empty($attendances->commute) && !empty($attendances->leave) && !empty($rests->start_rest) && !empty($rests->end_rest))
+        @elseif (!empty($attendances->commute) && !empty($attendances->leave))
             <label class="status"><span>退勤済</span></label>
             <h2 class="date">{{ \Carbon\Carbon::now()->isoFormat("YYYY年MM月DD日(ddd)") }}</h2>
             <span class="current">{{ \Carbon\Carbon::now()->format("H:i") }}</span><br>
