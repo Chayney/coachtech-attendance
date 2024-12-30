@@ -36,13 +36,13 @@
                     </ul>
                 </nav>
             </div>
-            <a class="header__logo-mobile" href="/">
+            <a class="header__logo-mobile" href="/attendance">
                 <img class="logo-mobile" src="{{ asset('images/logo.svg') }}">
             </a>
         </div>
         <div class="header__inner">
             <div class="header-utilities">
-                <a class="header__logo" href="/">
+                <a class="header__logo" href="/attendance">
                     <img src="{{ asset('images/logo.svg') }}">
                 </a>
                 <nav>
