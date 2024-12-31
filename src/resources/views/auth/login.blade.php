@@ -17,7 +17,7 @@
         </div>
         <div class="form__group-content">
           <div class="form__input--text">
-            <input type="email" name="email" value="{{ old('email') }}" />
+            <input type="email" name="email" value="{{ old('email') }}">
           </div>
           <div class="form__error">
             @error('email')
@@ -32,7 +32,7 @@
         </div>
         <div class="form__group-content">
           <div class="form__input--text">
-            <input type="password" name="password" />
+            <input type="password" name="password">
           </div>
           <div class="form__error">
             @error('password')
