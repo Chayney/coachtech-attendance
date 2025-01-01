@@ -1,5 +1,5 @@
 .container {
-    margin-top: 10%;
+    margin-top: 13%;
     text-align: center;
 }
 
@@ -23,7 +23,7 @@
 }
 
 .commute {
-    width: 10%;
+    width: 15%;
     background-color: #000;
     border-radius: 15px;
     padding: 10px 20px;
@@ -37,7 +37,7 @@
 }
 
 .break {
-    width: 10%;
+    width: 15%;
     background-color: #fff;
     border-radius: 15px;
     padding: 10px 20px;
@@ -51,7 +51,7 @@
     justify-content: space-around;
     align-items: center;
     margin: 0 auto;
-    width: 50%;
+    width: 80%;
 }
 
 .punch-btn {
@@ -88,18 +88,80 @@
     line-height: 180px;
 }
 
-.commute {
-    width: 10%;
-    background-color: #fff;
-    border-radius: 15px;
-    padding: 10px 20px;
-    font-size: 20px;
-    font-weight: bold;
-    color: #000;
-}
-
 .done {
     line-height: 180px;
     font-size: 20px;
     font-weight: bold;
+}
+
+@media screen and (max-width:1000px) {
+    .container {
+        margin-top: 17%;
+    }
+
+    .commute {
+        width: 20%;
+    }
+
+    .punch-btn {
+        width: 23%;
+    }
+
+    .rest-btn {
+        width: 23%;
+    }
+
+    .break {
+        width: 20%;
+    }
+}
+
+@media screen and (max-width:768px) {
+    .container {
+        margin-top: 22%;
+    }
+
+    .commute {
+        width: 23%;
+    }
+
+    .punch-btn {
+        width: 25%;
+    }
+
+    .rest-btn {
+        width: 25%;
+    }
+
+    .break {
+        width: 23%;
+    }
+}
+
+@media screen and (max-width:600px) {
+    .container {
+        margin-top: 36%;
+    }
+
+    .commute {
+        width: 55%;
+    }
+
+    .btn-group {
+        display: block;
+    }
+
+    .punch-btn {
+        width: 70%;
+        margin: 0 auto;
+    }
+
+    .rest-btn {
+        width: 70%;
+        margin: 0 auto;
+    }
+
+    .break {
+        width: 55%;
+    }
 }
