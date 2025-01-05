@@ -2,7 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
-use App\Http\Controllers\AttendanceController;
+use App\Http\Controllers\WorkController;
+use App\Http\Controllers\RestController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,9 +21,15 @@ Route::post('/login', [LoginController::class, 'login']);
 
 Route::middleware(['auth'])->group(function () {
     // 勤怠登録ページ
-    Route::get('/attendance', [AttendanceController::class, 'index']);
-    Route::post('/commute', [AttendanceController::class, 'commute']);
-    Route::post('/rest/start', [AttendanceController::class, 'breakIn']);
-    Route::patch('/rest/end', [AttendanceController::class, 'breakOut']);
-    Route::patch('/leave', [AttendanceController::class, 'leave']);
+    Route::get('/attendance', [WorkController::class, 'index']);
+    Route::post('/commute', [WorkController::class, 'commute']);
+    Route::post('/rest/start', [RestController::class, 'breakIn']);
+    Route::patch('/rest/end', [RestController::class, 'breakOut']);
+    Route::patch('/leave', [WorkController::class, 'leave']);
+
+    // 勤怠一覧ページ
+    Route::get('/attendance/list', [WorkController::class, 'show']);
+
+    // 勤怠詳細ページ
+    Route::get('/attendance/{id}', [WorkController::class, 'detail']);
 });
