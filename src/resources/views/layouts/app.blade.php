@@ -19,10 +19,10 @@
                 <nav class="nav_content">
                     <ul class="nav_list">
                         <li class="nav_item">
-                            <a class="" href="">勤怠</a>
+                            <a href="{{ url('/attendance') }}">勤怠</a>
                         </li>
                         <li class="nav_item">
-                            <a href="{{ url('') }}">勤怠一覧</a>
+                            <a href="{{ url('/attendance/list') }}">勤怠一覧</a>
                         </li>
                         <li class="nav_item">
                             <a href="{{ url('') }}">申請</a>
@@ -48,10 +48,10 @@
                 <nav>
                     <ul class="header-nav">
                         <li class="header-nav__item">
-                            <a class="header-nav__link" href="">勤怠</a>
+                            <a class="header-nav__link" href="{{ url('/attendance') }}">勤怠</a>
                         </li>
                         <li class="header-nav__item">
-                            <a class="header-nav__link" href="">勤怠一覧</a>
+                            <a class="header-nav__link" href="{{ url('/attendance/list') }}">勤怠一覧</a>
                         </li>
                         <li class="header-nav__item">
                             <a class="header-nav__link" href="">申請</a>
