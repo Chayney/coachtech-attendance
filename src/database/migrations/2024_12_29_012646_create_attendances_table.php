@@ -21,6 +21,7 @@ class CreateAttendancesTable extends Migration
             $table->time('leave')->nullable();
             $table->time('break_time')->nullable();
             $table->time('work_time')->nullable();
+            $table->string('reason')->nullable();
             $table->timestamps();
         });
     }
