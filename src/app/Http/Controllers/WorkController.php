@@ -7,7 +7,9 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Models\Attendance;
 use App\Models\Rest;
+use App\Models\Approve;
 use Carbon\Carbon;
+use App\Http\Requests\AttendRequest;
 
 class WorkController extends Controller
 {
@@ -95,10 +97,61 @@ class WorkController extends Controller
 
     public function detail(Request $request)
     {
-        $attendances = Attendance::with('user')->where('id', $request->id)->get();
-        $attendance = Attendance::with('user')->where('id', $request->id)->first();
-        $rests = Rest::with('attendance')->where('attendance_id', $attendance->id)->get();
+        $attendances = Approve::with(['approveAttendance', 'approveUser'])->where('attendance_id', $request->id)->get();
+        if ($attendances->isEmpty()) {
+            $attendances = Attendance::with('user')->where('id', $request->id)->get();
+            $attendance = Attendance::with('user')->where('id', $request->id)->first();
+            $rests = Rest::where('attendance_id', $attendance->id)->get();
 
-        return view('detail', compact('attendances', 'rests'));
+            return view('detail', compact('attendances', 'rests'));
+        } else {
+            $attendance = Approve::with(['approveAttendance', 'approveUser'])->where('attendance_id', $request->id)->first();
+            
+            $approveAttendanceId = $attendance->approveAttendance->id;
+            $rests = Rest::where('attendance_id', $approveAttendanceId)->get();
+
+            return view('detail', compact('attendances', 'rests'));
+        } 
+        
+    
+        
+    }
+
+    public function update(AttendRequest $request)
+    {
+        $user = Auth::user();
+        $id = $request->id;
+        $date1 = $request->input('date_1');
+        $date2 = $request->input('date_2');
+        $full_date = $date1 . $date2;
+        $date = Carbon::createFromFormat('Y年m月d日', $full_date)->toDateString();
+        $commute = $request->input('commute');
+        $commuteTime = Carbon::createFromFormat('H:i', $commute)->toTimeString();
+        $leave = $request->input('leave');
+        $leaveTime = Carbon::createFromFormat('H:i', $leave)->toTimeString();
+        $startRest = $request->input('start_rest');
+        $endRest = $request->input('end_rest');  
+        $startTime = Carbon::createFromFormat('H:i', $startRest)->toTimeString();
+        $endTime = Carbon::createFromFormat('H:i', $endRest)->toTimeString();    
+        $reason = $request->input('reason');
+        $attendance = Attendance::where('id', $request->id)->first();
+        $attendance->update([
+            'date' => $date,
+            'commute' => $commuteTime,
+            'leave' => $leaveTime,
+            'reason' => $reason
+        ]);
+        $rest = Rest::where('id', $attendance->id)->first();
+        $rest->update([
+            'start_rest' => $startTime,
+            'end_rest' => $endTime,
+        ]);
+        Approve::create([
+            'user_id' => $user->id,
+            'attendance_id' =>$request->attendance_id,
+            'status' => '承認待ち'
+        ]);
+        
+        return redirect("/attendance/{id}?id={$id}")->with('success', '修正しました');
     }
 }
