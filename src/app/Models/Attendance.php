@@ -16,7 +16,8 @@ class Attendance extends Model
         'leave',
         'rest',
         'break_time',
-        'work_time'
+        'work_time',
+        'reason'
     ];
 
     public function user()
