@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Models\Attendance;
 use App\Models\Rest;
+use App\Models\Approve;
 use Carbon\Carbon;
 
 class ApplyController extends Controller
@@ -14,6 +15,9 @@ class ApplyController extends Controller
     public function index()
     {
         $user = Auth::user();
-        return view('application');
+        $unapproves = Approve::with(['approveAttendance', 'approveUser'])->where('user_id', $user->id)->where('status', '承認待ち')->get();
+        $approves = Approve::with(['approveAttendance', 'approveUser'])->where('user_id', $user->id)->where('status', '承認済み')->get();
+        
+        return view('application', compact('unapproves', 'approves'));
     }
 }
