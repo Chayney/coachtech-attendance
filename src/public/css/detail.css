@@ -60,23 +60,63 @@ body {
     border-collapse: collapse;
     border-bottom: 2px solid rgb(179, 179, 179);
     padding: 15px;
+    width: 30%;
     font-weight: bold;
-    width: 25%;
+}
+
+.attend-form {
+    font-weight: bold;
+    text-align: center;
+    height: 30px;
 }
 
 .attend-table__item_middle {
-    width: 5%;
+    width: 3.5%;
     border-bottom: 2px solid rgb(179, 179, 179);
 }
 
 .attend-table__item_adjust {
-    width: 20%;
+    width: 10%;
     border-bottom: 2px solid rgb(179, 179, 179);
+    text-align: left;
 }
 
 .other {
-    width: 60%;
-    height: 50px;
+    width: 75%;
+    height: 70px;
+    font-weight: bold;
+}
+
+.correct {
+    width: 10%;
+    background-color: #000;
+    border-radius: 15px;
+    padding: 10px 20px;
+    font-size: 20px;
+    font-weight: bold;
+    color: #fff;
+    float: right;
+}
+
+.form-middle {
+    margin-left: 15%;
+    margin-right: 15%;
+}
+
+.approve-middle {
+    margin-left: 23%;
+    margin-right: 23%;
+}
+
+.red-font {
+    color: #ff0000;
+    font-weight: bold;
+    float: right;
+}
+
+.form__error {
+    color: #ff0000;
+    font-size: 13px;
 }
 
 @media screen and (max-width:1000px) {
