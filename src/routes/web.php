@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\WorkController;
 use App\Http\Controllers\RestController;
+use App\Http\Controllers\ApplyController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,4 +33,8 @@ Route::middleware(['auth'])->group(function () {
 
     // 勤怠詳細ページ
     Route::get('/attendance/{id}', [WorkController::class, 'detail']);
+    Route::patch('/attendance/update', [WorkController::class, 'update']);
+
+    // 申請一覧ページ
+    Route::get('/stamp_correction_request/list', [ApplyController::class, 'index']);
 });
