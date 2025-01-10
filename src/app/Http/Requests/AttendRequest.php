@@ -28,8 +28,8 @@ class AttendRequest extends FormRequest
             'date_2' => 'required|date_format:"n月j日"',
             'commute' => 'required|date_format:H:i|',
             'leave' => 'required|date_format:H:i',
-            'start_rest' => 'required|date_format:H:i',
-            'end_rest' => 'required|date_format:H:i',
+            'start_rest' => 'date_format:H:i',
+            'end_rest' => 'date_format:H:i',
             'reason' => 'required|string'
         ];
     }
