@@ -6,7 +6,7 @@
 
 @section('content')
     <div class="contact-form__content">
-        <h1>勤怠詳細</h1>
+        <h1 class="page-title">勤怠詳細</h1>
         @foreach ($attendances as $attendance)
             @if ($attendance->status == '承認待ち')
                 <div class="attend-table">
