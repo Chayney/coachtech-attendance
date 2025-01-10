@@ -105,16 +105,12 @@ class WorkController extends Controller
 
             return view('detail', compact('attendances', 'rests'));
         } else {
-            $attendance = Approve::with(['approveAttendance', 'approveUser'])->where('attendance_id', $request->id)->first();
-            
+            $attendance = Approve::with(['approveAttendance', 'approveUser'])->where('attendance_id', $request->id)->first();        
             $approveAttendanceId = $attendance->approveAttendance->id;
             $rests = Rest::where('attendance_id', $approveAttendanceId)->get();
 
             return view('detail', compact('attendances', 'rests'));
-        } 
-        
-    
-        
+        }    
     }
 
     public function update(AttendRequest $request)
