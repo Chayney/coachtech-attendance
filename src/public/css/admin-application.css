@@ -1,0 +1,178 @@
+body {
+    background-color: rgb(240, 239, 242);
+}
+
+.tabs {
+    margin: 3% 0;
+    width: 100%;
+    border-bottom: 1px solid #000;
+}
+
+.tab-content {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.tab-pane {
+    display: none;
+}
+
+#tab1 {
+    width: 100%;
+}
+
+#tab2 {
+    width: 100%;
+}
+
+#tab3 {
+    width: 100%;
+}
+
+.tab-pane.active {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.tab-button {
+    width: 20%;
+    border: none;
+    outline: none;
+    color: #000;
+    font-size: 20px;
+}
+
+.tab-button-stable { 
+    width: 20%;
+    border: none;
+    outline: none;
+    color: #000;
+    font-size: 20px;
+}
+
+.tab-button.active {
+    font-weight: bold;
+}
+
+.contact-form__content {
+    width: 90%;
+    margin: 10% auto 0 auto;
+}
+
+.page-title {
+    padding: 0.05em 1em;
+    background: transparent;
+    border-left: solid 5px #000;
+}
+
+.contact-form__heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 20px;
+    width: 100%;
+    margin: 0 auto;
+    background-color: #fff;
+    height: 55px;
+    border-radius: 5px;
+}
+  
+.attend-table {
+    width: 100%;
+    text-align: center;
+    background-color: #fff;
+    border-radius: 5px;
+}
+
+.attend-table__inner {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.attend-table__row {
+    width: 20%;
+}
+
+.attend-table__item {
+    border-collapse: collapse;
+    border-top: 2px solid rgb(179, 179, 179);
+    padding: 15px;
+    color: rgb(115, 115, 115);
+    font-weight: bold;
+}
+
+.attend-table__header {
+    font-weight: bold;
+    padding: 15px;
+    color: rgb(115, 115, 115);
+}
+
+.change_month {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 10%;
+}
+
+.title_month {
+    width: 70%;
+    text-align: center;
+}
+
+.reverce_search_month {
+    border: none;
+    background-color: #fff;
+    color: rgb(179, 179, 179);
+    font-size: 30px;
+    font-weight: bold;
+    transform: rotate(180deg);
+    margin-top: -5%;
+}
+
+.search_month {
+    border: none;
+    background-color: #fff;
+    color: rgb(179, 179, 179);
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.month {
+    color: rgb(115, 115, 115);
+    font-weight: bold;
+}
+
+.detail-btn {
+    border: none;
+    background-color: #fff;
+    color: #000;
+    font-weight: bold;
+}
+
+@media screen and (max-width:1000px) {
+    .contact-form__content {
+        margin-top: 13%;
+    }
+
+    .change_month {
+        width: 20%;
+    }
+}
+
+@media screen and (max-width:768px) {
+    .contact-form__content {
+        margin-top: 15%;
+    }
+
+    .change_month {
+        width: 25%;
+    }
+}
+
+@media screen and (max-width:600px) {
+    .contact-form__content {
+        margin-top: 18%;
+    }
+}
