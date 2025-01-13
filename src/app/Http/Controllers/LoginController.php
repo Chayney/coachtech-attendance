@@ -14,6 +14,11 @@ class LoginController extends Controller
         $credentials = $request->only('email', 'password');
 
         if (Auth::attempt($credentials)) {
+            $user = Auth::user();
+            if ($user->hasRole('admin')) {
+                return redirect()->intended('/admin/attendance/list');
+            }
+
             return redirect()->intended('/attendance');
         }
 
