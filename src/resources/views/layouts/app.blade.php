@@ -18,15 +18,27 @@
                 <label for="drawer_input" class="drawer_open"><span></span></label>
                 <nav class="nav_content">
                     <ul class="nav_list">
-                        <li class="nav_item">
-                            <a href="{{ url('/attendance') }}">勤怠</a>
-                        </li>
-                        <li class="nav_item">
-                            <a href="{{ url('/attendance/list') }}">勤怠一覧</a>
-                        </li>
-                        <li class="nav_item">
-                            <a href="{{ url('/stamp_correction_request/list') }}">申請</a>
-                        </li>
+                        @if (Auth::user()->hasRole('admin'))
+                            <li class="nav_item">
+                                <a href="{{ url('/admin/attendance/list') }}">勤怠一覧</a>
+                            </li>
+                            <li class="nav_item">
+                                <a href="{{ url('/admin/staff/list') }}">スタッフ一覧</a>
+                            </li>
+                            <li class="nav_item">
+                                <a href="{{ url('/stamp_correction_request/list') }}">申請一覧</a>
+                            </li>
+                        @else
+                            <li class="nav_item">
+                                <a href="{{ url('/attendance') }}">勤怠</a>
+                            </li>
+                            <li class="nav_item">
+                                <a href="{{ url('/attendance/list') }}">勤怠一覧</a>
+                            </li>
+                            <li class="nav_item">
+                                <a href="{{ url('/stamp_correction_request/list') }}">申請</a>
+                            </li>
+                        @endif
                         <li class="nav_item">
                             <form action="/logout" method="post">
                                 @csrf
@@ -36,26 +48,50 @@
                     </ul>
                 </nav>
             </div>
-            <a class="header__logo-mobile" href="/attendance">
-                <img class="logo-mobile" src="{{ asset('images/logo.svg') }}">
-            </a>
+            @if (Auth::user()->hasRole('admin'))
+                <a class="header__logo-mobile" href="/admin/attendance/list">
+                    <img class="logo-mobile" src="{{ asset('images/logo.svg') }}">
+                </a>
+            @else
+                <a class="header__logo-mobile" href="/attendance">
+                    <img class="logo-mobile" src="{{ asset('images/logo.svg') }}">
+                </a>
+            @endif
         </div>
         <div class="header__inner">
             <div class="header-utilities">
-                <a class="header__logo" href="/attendance">
-                    <img src="{{ asset('images/logo.svg') }}">
-                </a>
+                @if (Auth::user()->hasRole('admin'))
+                    <a class="header__logo" href="/admin/attendance/list">
+                        <img src="{{ asset('images/logo.svg') }}">
+                    </a>
+                @else
+                    <a class="header__logo" href="/attendance">
+                        <img src="{{ asset('images/logo.svg') }}">
+                    </a>
+                @endif
                 <nav>
                     <ul class="header-nav">
-                        <li class="header-nav__item">
-                            <a class="header-nav__link" href="{{ url('/attendance') }}">勤怠</a>
-                        </li>
-                        <li class="header-nav__item">
-                            <a class="header-nav__link" href="{{ url('/attendance/list') }}">勤怠一覧</a>
-                        </li>
-                        <li class="header-nav__item">
-                            <a class="header-nav__link" href="{{ url('/stamp_correction_request/list') }}">申請</a>
-                        </li>
+                        @if (Auth::user()->hasRole('admin'))
+                            <li class="header-nav__item">
+                                <a class="header-nav__link" href="{{ url('/admin/attendance/list') }}">勤怠一覧</a>
+                            </li>
+                            <li class="header-nav__item">
+                                <a class="header-nav__link" href="{{ url('/admin/staff/list') }}">スタッフ一覧</a>
+                            </li>
+                            <li class="header-nav__item">
+                                <a class="header-nav__link" href="{{ url('/stamp_correction_request/list') }}">申請一覧</a>
+                            </li>
+                        @else
+                            <li class="header-nav__item">
+                                <a class="header-nav__link" href="{{ url('/attendance') }}">勤怠</a>
+                            </li>
+                            <li class="header-nav__item">
+                                <a class="header-nav__link" href="{{ url('/attendance/list') }}">勤怠一覧</a>
+                            </li>
+                            <li class="header-nav__item">
+                                <a class="header-nav__link" href="{{ url('/stamp_correction_request/list') }}">申請</a>
+                            </li>
+                        @endif
                         <li class="header-nav__item">
                             <form action="/logout" method="post">
                                 @csrf
