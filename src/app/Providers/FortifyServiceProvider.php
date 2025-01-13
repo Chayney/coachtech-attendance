@@ -34,7 +34,11 @@ class FortifyServiceProvider extends ServiceProvider
             return view('auth.register');
         });     
         Fortify::loginView(function () {
-            return view('auth.login');
+            if (request()->is('admin/*')) {
+                return view('admin.login');
+            } else {
+                return view('auth.login');
+            }
         });
         Fortify::ignoreRoutes();
         Fortify::authenticateUsing(function ($request) {
