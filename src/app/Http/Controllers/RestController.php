@@ -31,9 +31,9 @@ class RestController extends Controller
         $rest->update([
             'end_rest' => Carbon::now()
         ]);
-        $resttime = Rest::selectRaw('SEC_TO_TIME(SUM(TIME_TO_SEC(TIMEDIFF(end_rest, start_rest)))) as totalresttime')->where('attendance_id', $attend->id)->first();
+        $restTime = Rest::selectRaw('SEC_TO_TIME(SUM(TIME_TO_SEC(TIMEDIFF(end_rest, start_rest)))) as totalRestTime')->where('attendance_id', $attend->id)->first();
         $attend->update([
-            'break_time' => $resttime->totalresttime
+            'break_time' => $restTime->totalRestTime
         ]);
 
         return redirect('/attendance')->with('success', '休憩終了しました');   
