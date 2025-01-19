@@ -64,8 +64,8 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     // 勤怠一覧ページ
     Route::get('/admin/attendance/list', [AdminController::class, 'index']);
 
-    // 勤怠詳細ページ
-    // Route::get('/attendance/{id}', [AdminController::class, 'detail']);
+    // 管理者用勤怠修正処理
+    Route::patch('/admin/attendance/update', [AdminController::class, 'renew']);
 
     // スタッフ一覧ページ
     Route::get('/admin/staff/list', [AdminController::class, 'show']);
