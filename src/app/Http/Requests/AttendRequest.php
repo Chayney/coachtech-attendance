@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Carbon\Carbon;
 
 class AttendRequest extends FormRequest
 {
@@ -23,39 +24,68 @@ class AttendRequest extends FormRequest
      */
     public function rules()
     {
-        return [
+        $rules = [
             'date_1' => 'required|date_format:"Y年"',
             'date_2' => 'required|date_format:"n月j日"',
-            'commute' => 'required|date_format:H:i|',
+            'commute' => 'required|date_format:H:i',
             'leave' => 'required|date_format:H:i',
-            'start_rest' => 'date_format:H:i',
-            'end_rest' => 'date_format:H:i',
-            'reason' => 'required|string'
+            'reason' => 'required'
         ];
+        if (is_array($this->start_rest)) {
+            $rules['start_rest.*'] = 'nullable|date_format:H:i';
+            $rules['end_rest.*'] = 'nullable|date_format:H:i';
+        } else {
+            $rules['start_rest'] = 'nullable|date_format:H:i';
+            $rules['end_rest'] = 'nullable|date_format:H:i';
+        }
+
+        return $rules;
     }
 
     public function withValidator($validator)
     {
         $validator->after(function ($validator) {
-            $commute = $this->input('commute');
-            $leave = $this->input('leave');
-            $restIds = $this->input('rest_ids', []);
-            $startRests = $this->input('start_rest',[]);
-            $endRests = $this->input('end_rest',[]);
-            if (strtotime($commute) >= strtotime($leave)) {
-                $validator->errors()->add('commute', '出勤時間もしくは退勤時間が不適切な値です');
-            }
-            foreach ($restIds as $index => $restId) {
-                $startRest = $startRests[$index];
-                $endRest = $endRests[$index];
-                if (strtotime($startRest) < strtotime($commute) || strtotime($startRest) > strtotime($leave)) {
-                    $validator->errors()->add('start_rest', '休憩時間が勤務時間外です');
+            if ($this->has('commute') && $this->has('leave')) {
+                try {
+                    $commute = Carbon::createFromFormat('H:i', $this->commute);
+                    $leave = Carbon::createFromFormat('H:i', $this->leave);
+                } catch (\Exception $e) {
+                    $validator->errors()->add('commute', '休憩開始時間は00:00形式で入力してください。');
+                    return;
                 }
-                if (strtotime($endRest) < strtotime($commute) || strtotime($endRest) > strtotime($leave)) {
-                    $validator->errors()->add('end_rest', '休憩時間が勤務時間外です');
+                if ($commute >= $leave) {
+                    $validator->errors()->add('commute', '出勤時間もしくは退勤時間が不適切な値です。');
                 }
-                if (strtotime($startRest) >= strtotime($endRest)) {
-                    $validator->errors()->add('start_rest', '休憩時間が勤務時間外です');
+                if (is_array($this->start_rest)) {
+                    foreach ($this->start_rest as $key => $startRest) {
+                        try {
+                            $startRestTime = Carbon::createFromFormat('H:i', $startRest);
+                            $endRestTime = Carbon::createFromFormat('H:i', $this->end_rest[$key]);
+                        } catch (\Exception $e) {
+                            $validator->errors()->add("start_rest.{$key}", '休憩開始時間は00:00形式で入力してください。');
+                            return;
+                        }
+                        if ($startRestTime < $commute || $startRestTime > $leave) {
+                            $validator->errors()->add("start_rest.{$key}", '休憩時間が勤務時間外です。');
+                        }
+                        if ($startRestTime >= $endRestTime) {
+                            $validator->errors()->add("start_rest.{$key}", '休憩開始時間が休憩終了時間より後になっています。');
+                        }
+                    }
+                } else {
+                    try {
+                        $startRest = Carbon::createFromFormat('H:i', $this->start_rest);
+                        $endRest = Carbon::createFromFormat('H:i', $this->end_rest);
+                    } catch (\Exception $e) {
+                        $validator->errors()->add('start_rest', '休憩時間の形式が不正です。');
+                        return;
+                    }
+                    if ($startRest < $commute || $startRest > $leave) {
+                        $validator->errors()->add('start_rest', '休憩時間が勤務時間外です。');
+                    }
+                    if ($startRest >= $endRest) {
+                        $validator->errors()->add('start_rest', '休憩開始時間が休憩終了時間より後になっています。');
+                    }
                 }
             }
         });
@@ -72,12 +102,11 @@ class AttendRequest extends FormRequest
             'commute.date_format' => '出勤時間は00:00形式で入力してください。',
             'leave.required' => '退勤時間を入力してください。',
             'leave.date_format' => '退勤時間は00:00形式で入力してください。',
-            'start_rest.required' => '休憩開始時間を入力してください。',
             'start_rest.date_format' => '休憩開始時間は00:00形式で入力してください。',
-            'end_rest.required' => '休憩終了時間を入力してください。',
+            'start_rest.*.date_format' => '休憩開始時間は00:00形式で入力してください。',
             'end_rest.date_format' => '休憩終了時間は00:00形式で入力してください。',
-            'reason.required' => '備考を記入してください。',
-            'reason.string' => '備考は文字で入力してください'
+            'end_rest.*.date_format' => '休憩終了時間は00:00形式で入力してください。',
+            'reason.required' => '備考を記入してください。'
         ];
     }
 }
