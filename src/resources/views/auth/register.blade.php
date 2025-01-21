@@ -64,11 +64,6 @@
           <div class="form__input--text">
             <input type="password" name="password_confirmation">
           </div>
-          <div class="form__error">
-            @error('password')
-              {{ $message }}
-            @enderror
-          </div>
         </div>
       </div>
       <div class="form__button">
