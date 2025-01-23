@@ -92,7 +92,7 @@ class WorkController extends Controller
         $thisMonth = $currentMonth->format('Y/m');
         $lastMonth = $currentMonth->copy()->subMonth()->format('Y/m');
         $nextMonth = $currentMonth->copy()->addMonth()->format('Y/m');
-        $attendances = Attendance::with('approves')->where('user_id', $user->id)->whereRaw("DATE_FORMAT(date, '%Y/%m') = ?", [$thisMonth])->get();
+        $attendances = Attendance::with('approves')->where('user_id', $user->id)->whereRaw("DATE_FORMAT(date, '%Y/%m') = ?", [$thisMonth])->orderby('date', 'ASC')->get();
         
         return view('attendance', compact('attendances', 'thisMonth', 'lastMonth', 'nextMonth'));
     }
@@ -107,10 +107,12 @@ class WorkController extends Controller
             return view('detail', compact('attendances', 'rests'));
         } else {
             $user = Auth::user();
-            $record = Attendance::where('id', $request->id)->where('user_id', $user->id)->first();
-            $attendances = Approve::with(['approveAttendance', 'approveUser'])->where('id', $request->id)->where('attendance_id', $request->attendance_id)->get();    
-            $rests = Rest::where('attendance_id', $request->id)->get();
-
+            $attendances = Approve::with(['approveAttendance', 'approveUser'])->where('id', $request->id)->get();
+            foreach ($attendances as $attendance) {
+                $approveAttendanceId = $attendance->approveAttendance->id;
+                $rests = Rest::where('attendance_id', $approveAttendanceId)->get();
+            }
+            
             return view('detail', compact('attendances', 'rests'));
         }    
     }
@@ -172,12 +174,12 @@ class WorkController extends Controller
             'break_time' => $breakTime,
             'reason' => $reason
         ]);
-        Approve::create([
+        $approve = Approve::create([
             'user_id' => $user->id,
             'attendance_id' =>$request->attendance_id,
             'status' => '承認待ち'
         ]);
         
-        return redirect("/attendance/{id}?id={$id}")->with('success', '修正しました');
+        return redirect("/attendance/{id}?id={$approve->id}")->with('success', '修正しました');
     }
 }
