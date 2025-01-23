@@ -63,6 +63,10 @@
 }
 
 @media screen and (max-width:1000px) {
+    .register__content {
+        margin: 15% auto;
+    }
+
     .form {
         width: 80%;
     }

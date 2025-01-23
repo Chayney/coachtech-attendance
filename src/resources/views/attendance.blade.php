@@ -14,8 +14,8 @@
             </form>
             <h2 class="title_month">{{ $thisMonth }}</h2>
             <form class="change_month" action="/attendance/list" method="get">
-                <button class="search_month" name="date" value="{{ $nextMonth }}">&#x279C;</button>
                 <label class="month">翌月</label>
+                <button class="search_month" name="date" value="{{ $nextMonth }}">&#x279C;</button>
             </form>
         </div>
         <div class="attend-table">
@@ -47,9 +47,16 @@
                         </td>
                         <td class="attend-table__item">
                             <form action="/attendance/{id}" method="get">
-                                <button type="submit" class="detail-btn" name="id" value="{{ $attendance['id'] }}">
-                                    <label>詳細</label>
-                                </button>
+                                @if(isset($attendance->approves) && $attendance->approves->isNotEmpty())
+                                    <input type="hidden" name="attendance_id" value="{{ $attendance['id'] }}">
+                                    <button type="submit" class="detail-btn" name="id" value="{{ $attendance->approves->first()->id }}">
+                                        <label>詳細</label>
+                                    </button>
+                                @else
+                                    <button type="submit" class="detail-btn" name="id" value="{{ $attendance['id'] }}">
+                                        <label>詳細</label>
+                                    </button>
+                                @endif
                             </form>
                         </td>              
                     </tr>

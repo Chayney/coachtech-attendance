@@ -56,7 +56,7 @@ body {
     color: rgb(115, 115, 115);
 }
 
-.change_month {
+.change_day {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -103,23 +103,36 @@ body {
         margin-top: 13%;
     }
 
-    .change_month {
+    .change_day {
         width: 20%;
     }
 }
 
 @media screen and (max-width:768px) {
     .contact-form__content {
-        margin-top: 15%;
+        margin-top: 18%;
     }
 
-    .change_month {
+    .change_day {
         width: 25%;
     }
 }
 
 @media screen and (max-width:600px) {
     .contact-form__content {
-        margin-top: 18%;
+        margin-top: 22%;
+    }
+
+    .page-title {
+        font-size: 23px;
+    }
+
+    .title_month {
+        font-size: 23px;
+    }
+
+    .attend-table {
+        white-space: nowrap;
+        overflow-x: auto;
     }
 }

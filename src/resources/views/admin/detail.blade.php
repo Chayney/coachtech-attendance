@@ -8,7 +8,7 @@
     <div class="contact-form__content">
         <h1 class="page-title">勤怠詳細</h1>
         @foreach ($attendances as $attendance)
-            <form action="/attendance/update" method="post">
+            <form action="/admin/attendance/update" method="post">
                 @csrf
                 @method('PATCH')
                 <div class="attend-table">
@@ -16,30 +16,26 @@
                         <tr class="attend-table__row">
                             <td class="attend-table__header_adjust"></td>
                             <th class="attend-table__header">名前</th>          
-                            <td class="attend-table__item">
+                            <td class="attend-table__item" colspan="3">
                                 {{ $attendance['user']['name'] }}
                             </td>
-                            <td class="attend-table__item_middle"></td>
-                            <td class="attend-table__item"></td>
-                            <td class="attend-table__item_adjust"></td>
+                            <td class="attend-form_adjust"></td>
                         </tr>
                         <tr class="attend-table__row">
                             <td class="attend-table__header_adjust"></td>
                             <th class="attend-table__header">日付</th>         
-                            <td class="attend-table__item">
+                            <td class="attend-table__item" colspan="3">
                                 <input type="text" class="attend-form" name="date_1" value="{{ old('date_1', \Carbon\Carbon::parse($attendance['date'])->isoFormat("YYYY年")) }}">
+                                <label class="form-middle">&emsp;</label>
+                                <input type="text" class="attend-form" name="date_2" value="{{ old('date_2', \Carbon\Carbon::parse($attendance['date'])->isoFormat("M月D日")) }}">
                                 @error('date_1')
                                     <div class="form__error">{{ $message }}</div>
                                 @enderror
-                            </td>
-                            <td class="attend-table__item_middle"></td>
-                            <td class="attend-table__item">
-                                <input type="text" class="attend-form" name="date_2" value="{{ old('date_2', \Carbon\Carbon::parse($attendance['date'])->isoFormat("M月D日")) }}">
                                 @error('date_2')
                                     <div class="form__error">{{ $message }}</div>
                                 @enderror
                             </td>
-                            <td class="attend-table__item_adjust"></td>
+                            <td class="attend-form_adjust"></td>
                         </tr>
                         <tr class="attend-table__row">
                             <td class="attend-table__header_adjust"></td>
@@ -52,7 +48,7 @@
                                     <div class="form__error">{{ $message }}</div>
                                 @enderror
                             </td>
-                            <td class="attend-table__item_adjust"></td>
+                            <td class="attend-form_adjust"></td>
                         </tr>
                         @if(count($rests) > 1)
                             @foreach ($rests as $rest)     
@@ -64,16 +60,16 @@
                                         <th class="attend-table__header">休憩</th>
                                     @endif                               
                                     <td class="attend-table__item" colspan="3">
-                                        <input type="text" class="attend-form" name="start_rest" value="{{ old('start_rest', substr($rest['start_rest'], 0, 5)) }}">
+                                        <input type="text" class="attend-form" name="start_rest[{{ $rest->id }}]" value="{{ old('start_rest.' . $rest->id, substr($rest['start_rest'], 0, 5)) }}">
                                         <label class="form-middle">~</label>
-                                        <input type="text" class="attend-form" name="end_rest" value="{{ old('end_rest', substr($rest['end_rest'], 0, 5)) }}">
-                                        @if ($errors->has('start_rest'))
-                                            <div class="form__error">{{ $errors->first('start_rest') }}</div>
-                                        @elseif ($errors->has('end_rest'))
-                                            <div class="form__error">{{ $errors->first('end_rest') }}</div>
+                                        <input type="text" class="attend-form" name="end_rest[{{ $rest->id }}]" value="{{ old('end_rest.' . $rest->id, substr($rest['end_rest'], 0, 5)) }}">
+                                        @if ($errors->has("start_rest.{$rest->id}"))
+                                            <div class="form__error">{{ $errors->first("start_rest.{$rest->id}") }}</div>
+                                        @elseif ($errors->has("end_rest.{$rest->id}"))
+                                            <div class="form__error">{{ $errors->first("end_rest.{$rest->id}") }}</div>
                                         @endif
                                     </td>
-                                    <td class="attend-table__item_adjust"></td>                           
+                                    <td class="attend-form_adjust"></td>                           
                                 </tr>
                             @endforeach
                         @elseif(count($rests) == 1)
@@ -82,16 +78,16 @@
                                     <td class="attend-table__header_adjust"></td>
                                     <th class="attend-table__header">休憩</th>                             
                                     <td class="attend-table__item" colspan="3">
-                                        <input type="text" class="attend-form" name="start_rest" value="{{ old('start_rest', substr($rest['start_rest'], 0, 5)) }}">
+                                        <input type="text" class="attend-form" name="start_rest" value="{{ old('start_rest', substr($rest->start_rest, 0, 5)) }}">
                                         <label class="form-middle">~</label>
-                                        <input type="text" class="attend-form" name="end_rest" value="{{ old('end_rest', substr($rest['end_rest'], 0, 5)) }}">
+                                        <input type="text" class="attend-form" name="end_rest" value="{{ old('end_rest', substr($rest->end_rest, 0, 5)) }}">
                                         @if ($errors->has('start_rest'))
                                             <div class="form__error">{{ $errors->first('start_rest') }}</div>
                                         @elseif ($errors->has('end_rest'))
                                             <div class="form__error">{{ $errors->first('end_rest') }}</div>
                                         @endif
                                     </td>
-                                    <td class="attend-table__item_adjust"></td>                           
+                                    <td class="attend-form_adjust"></td>                           
                                 </tr>
                             @endforeach
                         @else
@@ -101,12 +97,12 @@
                             <td class="attend-table__header_adjust"></td>
                             <th class="attend-table__header">備考</th>          
                             <td class="attend-table__item" colspan="3">
-                                <input type="text" class="other" name="reason">
+                                <input type="text" class="other" name="reason" value="{{ $attendance['reason'] }}">
                                 @error('reason')
                                     <div class="form__error">{{ $message }}</div>
                                 @enderror
                             </td>
-                            <td class="attend-table__item_adjust"></td>
+                            <td class="attend-form_adjust"></td>
                         </tr>                              
                     </table>
                 </div>

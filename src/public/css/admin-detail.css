@@ -47,6 +47,17 @@ body {
     border-bottom: 2px solid rgb(179, 179, 179);
 }
 
+.attend-table__item_middle {
+    width: 3.5%;
+    border-bottom: 2px solid rgb(179, 179, 179);
+}
+
+.attend-table__item_adjust {
+    width: 10%;
+    border-bottom: 2px solid rgb(179, 179, 179);
+    text-align: left;
+}
+
 .attend-table__header {
     width: 20%;
     text-align: left;
@@ -60,8 +71,15 @@ body {
     border-collapse: collapse;
     border-bottom: 2px solid rgb(179, 179, 179);
     padding: 15px;
-    width: 30%;
+    width: 60%;
     font-weight: bold;
+    text-align: left;
+}
+
+.attend-form_adjust {
+    border-collapse: collapse;
+    border-bottom: 2px solid rgb(179, 179, 179);
+    width: 20%;
 }
 
 .attend-form {
@@ -70,19 +88,8 @@ body {
     height: 30px;
 }
 
-.attend-table__item_middle {
-    width: 3.5%;
-    border-bottom: 2px solid rgb(179, 179, 179);
-}
-
-.attend-table__item_adjust {
-    width: 10%;
-    border-bottom: 2px solid rgb(179, 179, 179);
-    text-align: left;
-}
-
 .other {
-    width: 75%;
+    width: 100%;
     height: 70px;
     font-weight: bold;
 }
@@ -99,8 +106,8 @@ body {
 }
 
 .form-middle {
-    margin-left: 15%;
-    margin-right: 15%;
+    margin-left: 10%;
+    margin-right: 10%;
 }
 
 .approve-middle {
@@ -124,13 +131,62 @@ body {
         margin-top: 13%;
     }
 
-    .change_month {
+    .attend-table__header_adjust {
+        width: 2%;
+    }
+
+    .attend-table__header {
+        width: 15%;
+    }
+
+    .attend-table__item {
+        width: 45%;
+    }
+
+    .form-middle {
+        margin-left: 5%;
+        margin-right: 5%;
+    }
+
+    .attend-form_adjust {
+        width: 5%;
+    }
+
+    .attend-form {
+        width: 30%;
+    }
+
+    .correct {
         width: 20%;
     }
 }
 
 @media screen and (max-width:768px) {
-    .change_month {
-        width: 25%;
+    .contact-form__content {
+        margin-top: 18%;
+    }
+}
+
+@media screen and (max-width:650px) {
+    .contact-form__content {
+        margin-top: 22%;
+    }
+
+    .attend-table {
+        white-space: nowrap;
+        overflow-x: auto;
+    }
+
+    .attend-form {
+        font-size: 10px;
+    }
+
+    .approve-middle {
+        margin-left: 10%;
+        margin-right: 10%;
+    }
+
+    .correct {
+        width: 30%;
     }
 }

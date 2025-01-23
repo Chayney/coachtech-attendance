@@ -13,7 +13,7 @@
                     <table class="attend-table__inner">                      
                         <tr class="attend-table__row">
                             <td class="attend-table__header_adjust"></td>
-                            <th class="attend-table__header">名前</th>          
+                            <th class="attend-table__header-approve">名前</th>          
                             <td class="attend-table__item">
                                 {{ $attendance['approveUser']['name'] }}
                             </td>
@@ -23,23 +23,21 @@
                         </tr>
                         <tr class="attend-table__row">
                             <td class="attend-table__header_adjust"></td>
-                            <th class="attend-table__header">日付</th>       
-                            <td class="attend-table__item">
-                                <label class="attend-form">{{ \Carbon\Carbon::parse($attendance['approveAttendance']['date'])->isoFormat("YYYY年") }}</label>
-                            </td>
-                            <td class="attend-table__item_middle"></td>
-                            <td class="attend-table__item">
-                                <label class="attend-form">{{ \Carbon\Carbon::parse($attendance['approveAttendance']['date'])->isoFormat("M月D日") }}</label>
+                            <th class="attend-table__header-approve">日付</th>       
+                            <td class="attend-table__item-approve" colspan="3">
+                                <label class="approve-item">{{ \Carbon\Carbon::parse($attendance['approveAttendance']['date'])->isoFormat("YYYY年") }}</label>
+                                <label class="approve-middle"></label>
+                                <label class="approve-item">{{ \Carbon\Carbon::parse($attendance['approveAttendance']['date'])->isoFormat("M月D日") }}</label>
                             </td>
                             <td class="attend-table__item_adjust"></td>
                         </tr>
                         <tr class="attend-table__row">
                             <td class="attend-table__header_adjust"></td>
-                            <th class="attend-table__header">出勤・退勤</th>          
-                            <td class="attend-table__item" colspan="3">
-                                <label class="attend-form">{{ substr($attendance['approveAttendance']['commute'], 0, 5) }}</label>
+                            <th class="attend-table__header-approve">出勤・退勤</th>          
+                            <td class="attend-table__item-approve" colspan="3">
+                                <label class="approve-item">{{ substr($attendance['approveAttendance']['commute'], 0, 5) }}</label>
                                 <label class="approve-middle">~</label>
-                                <label class="attend-form">{{ substr($attendance['approveAttendance']['leave'], 0, 5) }}</label>
+                                <label class="approve-item">{{ substr($attendance['approveAttendance']['leave'], 0, 5) }}</label>
                             </td>
                             <td class="attend-table__item_adjust"></td>
                         </tr>
@@ -48,14 +46,14 @@
                                 <tr class="attend-table__row">
                                     <td class="attend-table__header_adjust"></td>
                                     @if($loop->iteration > 1)
-                                        <th class="attend-table__header">休憩{{ $loop->iteration }}</th>
+                                        <th class="attend-table__header-approve">休憩{{ $loop->iteration }}</th>
                                     @else
-                                        <th class="attend-table__header">休憩</th>
+                                        <th class="attend-table__header-approve">休憩</th>
                                     @endif                               
-                                    <td class="attend-table__item" colspan="3">
-                                        <label class="attend-form">{{ $rest['start_rest'] }}</label>
+                                    <td class="attend-table__item-approve" colspan="3">
+                                        <label class="approve-item">{{ $rest['start_rest'] }}</label>
                                         <label class="approve-middle">~</label>
-                                        <label class="attend-form">{{ $rest['end_rest'] }}</label>                     
+                                        <label class="approve-item">{{ $rest['end_rest'] }}</label>                     
                                     </td>
                                     <td class="attend-table__item_adjust"></td>                           
                                 </tr>
@@ -64,11 +62,11 @@
                             @foreach ($rests as $rest)     
                                 <tr class="attend-table__row">
                                     <td class="attend-table__header_adjust"></td>
-                                    <th class="attend-table__header">休憩</th>                             
-                                    <td class="attend-table__item" colspan="3">
-                                        <label class="attend-form">{{ substr($rest['start_rest'], 0, 5) }}</label>
+                                    <th class="attend-table__header-approve">休憩</th>                             
+                                    <td class="attend-table__item-approve" colspan="3">
+                                        <label class="approve-item">{{ substr($rest['start_rest'], 0, 5) }}</label>
                                         <label class="approve-middle">~</label>
-                                        <label class="attend-form">{{ substr($rest['end_rest'], 0, 5) }}</label>
+                                        <label class="approve-item">{{ substr($rest['end_rest'], 0, 5) }}</label>
                                     </td>
                                     <td class="attend-table__item_adjust"></td>                           
                                 </tr>
@@ -78,8 +76,8 @@
                         @endif
                         <tr class="attend-table__row">
                             <td class="attend-table__header_adjust"></td>
-                            <th class="attend-table__header">備考</th>          
-                            <td class="attend-table__item" colspan="3">
+                            <th class="attend-table__header-approve">備考</th>          
+                            <td class="attend-table__item-approve" colspan="3">
                                 {{ $attendance['approveAttendance']['reason'] }}
                             </td>
                             <td class="attend-table__item_adjust"></td>
@@ -95,7 +93,7 @@
                         <table class="attend-table__inner">                      
                             <tr class="attend-table__row">
                                 <td class="attend-table__header_adjust"></td>
-                                <th class="attend-table__header">名前</th>          
+                                <th class="attend-table__header-approve">名前</th>          
                                 <td class="attend-table__item">
                                     {{ $attendance['approveUser']['name'] }}
                                 </td>
@@ -105,23 +103,21 @@
                             </tr>
                             <tr class="attend-table__row">
                                 <td class="attend-table__header_adjust"></td>
-                                <th class="attend-table__header">日付</th>         
-                                <td class="attend-table__item">
-                                    {{ \Carbon\Carbon::parse($attendance['approveAttendance']['date'])->isoFormat("YYYY年") }}
-                                </td>
-                                <td class="attend-table__item_middle"></td>
-                                <td class="attend-table__item">
-                                    {{ \Carbon\Carbon::parse($attendance['approveAttendance']['date'])->isoFormat("M月D日") }}
+                                <th class="attend-table__header-approve">日付</th>         
+                                <td class="attend-table__item-approve" colspan="3">
+                                    <label class="approve-item">{{ \Carbon\Carbon::parse($attendance['approveAttendance']['date'])->isoFormat("YYYY年") }}</label>
+                                    <label class="approve-middle"></label>
+                                    <label class="approve-item">{{ \Carbon\Carbon::parse($attendance['approveAttendance']['date'])->isoFormat("M月D日") }}</label>
                                 </td>
                                 <td class="attend-table__item_adjust"></td>
                             </tr>
                             <tr class="attend-table__row">
                                 <td class="attend-table__header_adjust"></td>
-                                <th class="attend-table__header">出勤・退勤</th>          
-                                <td class="attend-table__item" colspan="3">
-                                    <label class="attend-form">{{ substr($attendance['approveAttendance']['commute'], 0, 5) }}</label>
+                                <th class="attend-table__header-approve">出勤・退勤</th>          
+                                <td class="attend-table__item-approve" colspan="3">
+                                    <label class="approve-item">{{ substr($attendance['approveAttendance']['commute'], 0, 5) }}</label>
                                     <label class="approve-middle">~</label>
-                                    <label class="attend-form">{{ substr($attendance['approveAttendance']['leave'], 0, 5) }}</label>
+                                    <label class="approve-item">{{ substr($attendance['approveAttendance']['leave'], 0, 5) }}</label>
                                 </td>
                                 <td class="attend-table__item_adjust"></td>
                             </tr>
@@ -130,14 +126,14 @@
                                     <tr class="attend-table__row">
                                         <td class="attend-table__header_adjust"></td>
                                         @if($loop->iteration > 1)
-                                            <th class="attend-table__header">休憩{{ $loop->iteration }}</th>
+                                            <th class="attend-table__header-approve">休憩{{ $loop->iteration }}</th>
                                         @else
-                                            <th class="attend-table__header">休憩</th>
+                                            <th class="attend-table__header-approve">休憩</th>
                                         @endif                               
-                                        <td class="attend-table__item" colspan="3">
-                                            <label class="attend-form">{{ substr($rest['start_rest'], 0, 5) }}</label>
+                                        <td class="attend-table__item-approve" colspan="3">
+                                            <label class="approve-item">{{ substr($rest['start_rest'], 0, 5) }}</label>
                                             <label class="approve-middle">~</label>
-                                            <label class="attend-form">{{ substr($rest['end_rest'], 0, 5) }}</label>
+                                            <label class="approve-item">{{ substr($rest['end_rest'], 0, 5) }}</label>
                                         </td>
                                         <td class="attend-table__item_adjust"></td>                           
                                     </tr>
@@ -146,11 +142,11 @@
                                 @foreach ($rests as $rest)     
                                     <tr class="attend-table__row">
                                         <td class="attend-table__header_adjust"></td>
-                                        <th class="attend-table__header">休憩</th>                             
-                                        <td class="attend-table__item" colspan="3">
-                                            <label class="attend-form">{{ substr($rest['start_rest'], 0, 5) }}</label>
+                                        <th class="attend-table__header-approve">休憩</th>                             
+                                        <td class="attend-table__item-approve" colspan="3">
+                                            <label class="approve-item">{{ substr($rest['start_rest'], 0, 5) }}</label>
                                             <label class="approve-middle">~</label>
-                                            <label class="attend-form">{{ substr($rest['end_rest'], 0, 5) }}</label>
+                                            <label class="approve-item">{{ substr($rest['end_rest'], 0, 5) }}</label>
                                         </td>
                                         <td class="attend-table__item_adjust"></td>                           
                                     </tr>
@@ -160,8 +156,8 @@
                             @endif
                             <tr class="attend-table__row">
                                 <td class="attend-table__header_adjust"></td>
-                                <th class="attend-table__header">備考</th>          
-                                <td class="attend-table__item" colspan="3">
+                                <th class="attend-table__header-approve">備考</th>          
+                                <td class="attend-table__item-approve" colspan="3">
                                     <label class="other">{{ $attendance['approveAttendance']['reason'] }}</label>
                                 </td>
                                 <td class="attend-table__item_adjust"></td>

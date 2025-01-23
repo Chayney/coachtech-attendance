@@ -156,23 +156,36 @@ body {
         margin-top: 13%;
     }
 
-    .change_month {
-        width: 20%;
+    .tabs {
+        margin: 5% 0;
+    }
+
+    .attend-table {
+        white-space: nowrap;
     }
 }
 
 @media screen and (max-width:768px) {
     .contact-form__content {
-        margin-top: 15%;
+        margin-top: 18%;
     }
 
-    .change_month {
-        width: 25%;
+    .attend-table {
+        overflow-x: auto;
     }
 }
 
 @media screen and (max-width:600px) {
     .contact-form__content {
-        margin-top: 18%;
+        margin-top: 22%;
+    }
+
+    .tabs {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .tab-button {
+        width: 40%;
     }
 }

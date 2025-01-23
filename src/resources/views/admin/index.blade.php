@@ -8,14 +8,14 @@
     <div class="contact-form__content">
         <h1 class="page-title">{{ $today->format('Y年n月j日') }}の勤怠</h1>
         <div class="contact-form__heading">
-            <form class="change_month" action="/admin/attendance/list" method="get">
+            <form class="change_day" action="/admin/attendance/list" method="get">
                 <button class="reverce_search_month" name="date" value="{{ $yesterday->format('Y/m/d') }}">&#x279C;</button>
                 <label class="month">前日</label>
             </form>
             <h2 class="title_month">{{ $today->format('Y/m/d') }}</h2>
-            <form class="change_month" action="/admin/attendance/list" method="get">
-                <button class="search_month" name="date" value="{{ $tomorrow->format('Y/m/d') }}">&#x279C;</button>
+            <form class="change_day" action="/admin/attendance/list" method="get">
                 <label class="month">翌日</label>
+                <button class="search_month" name="date" value="{{ $tomorrow->format('Y/m/d') }}">&#x279C;</button>
             </form>
         </div>
         <div class="attend-table">

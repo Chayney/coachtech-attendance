@@ -42,6 +42,7 @@
                                 </td>
                                 <td class="attend-table__item">
                                     <form action="/attendance/{id}" method="get">
+                                        <input type="hidden" name="attendance_id" value="{{ $unapprove['approveAttendance']['id'] }}">
                                         <button type="submit" class="detail-btn" name="id" value="{{ $unapprove['id'] }}">
                                             <label>詳細</label>
                                         </button>
@@ -82,6 +83,7 @@
                                 </td>
                                 <td class="attend-table__item">
                                     <form action="/attendance/{id}" method="get">
+                                        <input type="hidden" name="attendance_id" value="{{ $approve['approveAttendance']['id'] }}">
                                         <button type="submit" class="detail-btn" name="id" value="{{ $approve['id'] }}">
                                             <label>詳細</label>
                                         </button>

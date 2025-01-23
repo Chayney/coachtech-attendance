@@ -102,24 +102,25 @@ body {
     .contact-form__content {
         margin-top: 13%;
     }
-
-    .change_month {
-        width: 20%;
-    }
 }
 
 @media screen and (max-width:768px) {
     .contact-form__content {
-        margin-top: 15%;
-    }
-
-    .change_month {
-        width: 25%;
+        margin-top: 18%;
     }
 }
 
 @media screen and (max-width:600px) {
     .contact-form__content {
-        margin-top: 18%;
+        margin-top: 22%;
+    }
+
+    .attend-table__inner {
+        width: 600px;
+    }
+
+    .attend-table {
+        width: 550px;
+        overflow-x: auto;
     }
 }

@@ -16,10 +16,10 @@
             </form>
             <h2 class="title_month">{{ $thisMonth }}</h2>
             <form class="change_month" action="/admin/attendance/staff/{id}" method="get">
+                <label class="month">翌月</label>
                 <input type="hidden" name="id" value="{{ $id }}">
                 <input type="hidden" name="name" value="{{ $user }}">
                 <button class="search_month" name="date" value="{{ $nextMonth }}">&#x279C;</button>
-                <label class="month">翌月</label>
             </form>
         </div>
         <div class="attend-table">
