@@ -9,6 +9,7 @@ use App\Models\Approve;
 use App\Models\Rest;
 use App\Models\User;
 use Carbon\Carbon;
+use App\Http\Requests\AttendRequest;
 
 class AdminController extends Controller
 {
@@ -54,6 +55,67 @@ class AdminController extends Controller
         return view('admin.detail', compact('attendances', 'rests')); 
     }
 
+    public function renew(AttendRequest $request)
+    {
+        $user = Auth::user();
+        $id = $request->id;
+        $date1 = $request->input('date_1');
+        $date2 = $request->input('date_2');
+        $full_date = $date1 . $date2;
+        $date = Carbon::createFromFormat('Y年m月d日', $full_date)->toDateString();
+        $commute = new Carbon($request->commute);
+        $commuteStr = $request->input('commute');
+        $commuteTime = Carbon::createFromFormat('H:i', $commuteStr)->toTimeString();
+        $leave = new Carbon($request->leave);
+        $leaveStr = $request->input('leave');
+        $leaveTime = Carbon::createFromFormat('H:i', $leaveStr)->toTimeString();
+        $startRests = $request->input('start_rest');
+        $endRests = $request->input('end_rest');
+        $reason = $request->input('reason');
+        $attendance = Attendance::where('id', $request->id)->first();
+        $rests = Rest::where('attendance_id', $attendance->id)->get();
+        if (is_array($startRests)) {
+            foreach ($request->start_rest as $id => $startRest) {
+                $rest = Rest::find($id);
+                if ($rest) {
+                    $rest->start_rest = Carbon::createFromFormat('H:i', $startRest)->toTimeString();
+                    $endRest = $endRests[$id] ?? null;
+                    if ($endRest) {
+                        $rest->end_rest = Carbon::createFromFormat('H:i', $endRest)->toTimeString();
+                    }        
+                    $rest->save();
+                }
+            }
+        } else {
+            $rest = Rest::find($id);
+            $startRest = $request->input('start_rest');
+            $endRest = $request->input('end_rest');
+            $rest->start_rest = Carbon::createFromFormat('H:i', $startRest)->toTimeString();
+            $rest->end_rest = Carbon::createFromFormat('H:i', $endRest)->toTimeString();
+            $rest->save();
+        }      
+        $restTime = Rest::selectRaw('SEC_TO_TIME(SUM(TIME_TO_SEC(TIMEDIFF(end_rest, start_rest)))) as totalRestTime')->where('attendance_id', $attendance->id)->first();
+        $breakTime = $restTime->totalRestTime;
+        $recessTime = new Carbon($breakTime);
+        $seconds = $recessTime->hour * 3600 + $recessTime->minute * 60 + $recessTime->second;
+        $stayingTime = $commute->diffInSeconds($leave);
+        $stayTime = $stayingTime - $seconds;
+        $workingTimeSeconds = floor($stayTime % 60);
+        $workingTimeMinutes = floor(($stayTime % 3600) / 60);
+        $workingTimeHours = floor($stayTime / 3600);
+        $workTime = sprintf('%02d:%02d:%02d', $workingTimeHours, $workingTimeMinutes, $workingTimeSeconds);
+        $attendance->update([
+            'date' => $date,
+            'commute' => $commuteTime,
+            'leave' => $leaveTime,
+            'work_time' => $workTime,
+            'break_time' => $breakTime,
+            'reason' => $reason
+        ]);
+              
+        return redirect("/attendance/{id}?id={$id}&date={$date}")->with('success', '修正しました');
+    }
+
     public function apply()
     {
         $unapproves = Approve::with(['approveAttendance', 'approveUser'])->where('status', '承認待ち')->get();
@@ -65,8 +127,10 @@ class AdminController extends Controller
     public function approve(Request $request)
     {
         $attendances = Approve::with(['approveAttendance', 'approveUser'])->where('id', $request->id)->get();
-        $attendance = Attendance::with('user')->where('id', $request->id)->first();
-        $rests = Rest::where('attendance_id', $attendance->id)->get();
+        foreach ($attendances as $attendance) {
+            $approveAttendanceId = $attendance->approveAttendance->id;
+            $rests = Rest::where('attendance_id', $approveAttendanceId)->get();
+        }
         
         return view('admin.approve', compact('attendances', 'rests'));
     }
@@ -79,6 +143,6 @@ class AdminController extends Controller
             'status' => '承認済み'
         ]);
         
-        return redirect("/stamp_correction_request/approve/{attendance_correct_request}?id={$id}")->with('success', '修正しました');
+        return redirect("/stamp_correction_request/approve/{attendance_correct_request}?id={$id}")->with('success', '承認しました');
     }
 }
