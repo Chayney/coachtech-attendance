@@ -14,7 +14,7 @@ class DateTimeTest extends TestCase
      *
      * @return void
      */
-    public function test_it_displays_the_current_datetime()
+    public function test_current_datetime()
     {
         $user = User::factory()->create();
         $this->actingAs($user);
