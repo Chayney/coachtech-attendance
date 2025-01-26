@@ -50,7 +50,7 @@ class AttendRequest extends FormRequest
                     $commute = Carbon::createFromFormat('H:i', $this->commute);
                     $leave = Carbon::createFromFormat('H:i', $this->leave);
                 } catch (\Exception $e) {
-                    $validator->errors()->add('commute', '休憩開始時間は00:00形式で入力してください。');
+                    $validator->errors()->add('commute', '出勤もしくは退勤時間は00:00形式で入力してください。');
                     return;
                 }
                 if ($commute >= $leave) {
@@ -62,7 +62,7 @@ class AttendRequest extends FormRequest
                             $startRestTime = Carbon::createFromFormat('H:i', $startRest);
                             $endRestTime = Carbon::createFromFormat('H:i', $this->end_rest[$key]);
                         } catch (\Exception $e) {
-                            $validator->errors()->add("start_rest.{$key}", '休憩開始時間は00:00形式で入力してください。');
+                            $validator->errors()->add("start_rest.{$key}", '休憩時間は00:00形式で入力してください。');
                             return;
                         }
                         if ($startRestTime < $commute || $startRestTime > $leave) {
@@ -98,14 +98,14 @@ class AttendRequest extends FormRequest
             'date_1.date_format' => '西暦はYYYY年形式で入力してください。',
             'date_2.required' => '日付を入力してください。',
             'date_2.date_format' => '日付はM月D日形式で入力してください。',
-            'commute.required' => '出勤時間を入力してください。',
-            'commute.date_format' => '出勤時間は00:00形式で入力してください。',
-            'leave.required' => '退勤時間を入力してください。',
-            'leave.date_format' => '退勤時間は00:00形式で入力してください。',
-            'start_rest.date_format' => '休憩開始時間は00:00形式で入力してください。',
-            'start_rest.*.date_format' => '休憩開始時間は00:00形式で入力してください。',
-            'end_rest.date_format' => '休憩終了時間は00:00形式で入力してください。',
-            'end_rest.*.date_format' => '休憩終了時間は00:00形式で入力してください。',
+            'commute.required' => '出勤もしくは退勤時間を入力してください。',
+            'commute.date_format' => '出勤もしくは退勤時間は00:00形式で入力してください。',
+            'leave.required' => '出勤もしくは退勤時間を入力してください。',
+            'leave.date_format' => '出勤もしくは退勤時間は00:00形式で入力してください。',
+            'start_rest.date_format' => '休憩時間は00:00形式で入力してください。',
+            'start_rest.*.date_format' => '休憩時間は00:00形式で入力してください。',
+            'end_rest.date_format' => '休憩時間は00:00形式で入力してください。',
+            'end_rest.*.date_format' => '休憩時間は00:00形式で入力してください。',
             'reason.required' => '備考を記入してください。'
         ];
     }
