@@ -15,6 +15,9 @@ class RestController extends Controller
     {
         $user = Auth::user();
         $attend = Attendance::where('user_id', $user->id)->latest()->first();
+        $attend->update([
+            'status_id' => 3
+        ]);
         Rest::create([
             'attendance_id' => $attend->id,
             'start_rest' => Carbon::now()
@@ -33,6 +36,7 @@ class RestController extends Controller
         ]);
         $restTime = Rest::selectRaw('SEC_TO_TIME(SUM(TIME_TO_SEC(TIMEDIFF(end_rest, start_rest)))) as totalRestTime')->where('attendance_id', $attend->id)->first();
         $attend->update([
+            'status_id' => 2,
             'break_time' => $restTime->totalRestTime
         ]);
 
