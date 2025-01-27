@@ -10,6 +10,7 @@ use App\Models\Rest;
 use App\Models\User;
 use Carbon\Carbon;
 use App\Http\Requests\AttendRequest;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class AdminController extends Controller
 {
@@ -26,7 +27,7 @@ class AdminController extends Controller
 
     public function show()
     {
-        $users = User::all();
+        $users = User::where('name', '!=', 'admin')->get();
 
         return view('admin.userlist', compact('users'));
     }
@@ -41,7 +42,7 @@ class AdminController extends Controller
         $lastMonth = $currentMonth->copy()->subMonth()->format('Y/m');
         $nextMonth = $currentMonth->copy()->addMonth()->format('Y/m');
         $attendances = Attendance::with('user')->where('user_id', $id)->whereRaw("DATE_FORMAT(date, '%Y/%m') = ?", [$thisMonth])->get();
-
+        
         return view('admin.attendance', compact('id', 'user', 'attendances', 'thisMonth', 'lastMonth', 'nextMonth'));
     }
 
@@ -144,5 +145,40 @@ class AdminController extends Controller
         ]);
         
         return redirect("/stamp_correction_request/approve/{attendance_correct_request}?id={$id}")->with('success', '承認しました');
+    }
+
+    public function export(Request $request)
+    {
+        $user = $request->input('user_id');
+        $selectedMonth = $request->input('date');
+        $startDate = Carbon::createFromFormat('Y/m', $selectedMonth)->startOfMonth();
+        $endDate = Carbon::createFromFormat('Y/m', $selectedMonth)->endOfMonth();
+        $query = Attendance::where('user_id', $user)->whereBetween('date', [$startDate, $endDate])->select(['date', 'commute', 'leave', 'break_time', 'work_time']);
+        $csvData = $query->get()->toArray();
+        $csvHeader = [
+            '日付', '出勤', '退勤', '休憩', '合計'
+        ];
+        $response = new StreamedResponse(function () use ($csvHeader, $csvData) {
+            $createCsvFile = fopen('php://output', 'w');
+            mb_convert_variables('SJIS-win', 'UTF-8', $csvHeader);
+            fputcsv($createCsvFile, $csvHeader);
+
+            foreach ($csvData as $csv) {
+                $date = Carbon::parse($csv['date'])->isoFormat("MM/DD(ddd)");
+                $csv['date'] = $date;
+                $csv['commute'] = Carbon::createFromFormat('H:i:s', $csv['commute'])->format('H:i');
+                $csv['leave'] = Carbon::createFromFormat('H:i:s', $csv['leave'])->format('H:i');
+                $csv['break_time'] = Carbon::createFromFormat('H:i:s', $csv['break_time'])->format('H:i');
+                $csv['work_time'] = Carbon::createFromFormat('H:i:s', $csv['work_time'])->format('H:i');
+                mb_convert_variables('SJIS-win', 'UTF-8', $csv);
+                fputcsv($createCsvFile, $csv);
+            }
+            fclose($createCsvFile);
+        }, 200, [
+            'Content-Type' => 'text/csv',
+            'Content-Disposition' => 'attachment; filename="attendance.csv"',
+        ]);
+
+        return $response;
     }
 }
