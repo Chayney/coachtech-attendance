@@ -94,10 +94,10 @@ class AdminRecordTest extends TestCase
         $dateString = Carbon::now()->format('Y/m/d');
         $currentDay = Carbon::createFromFormat('Y/m/d', $dateString);
         $today = $currentDay->format('Y/m');
-        $attendances = Attendance::with('approves')->where('user_id', $user->id)->whereRaw("DATE_FORMAT(date, '%Y/%m') = ?", [$today])->orderby('date', 'ASC')->get();
+        $attendances = Attendance::where('user_id', $user->id)->whereRaw("DATE_FORMAT(date, '%Y/%m') = ?", [$today])->orderby('date', 'ASC')->get();
         $response = $this->get('/admin/attendance/list');
         $yesterdayDate = $yesterday->format('Y/m/d');
-        $attendances = Attendance::with('approves')->where('user_id', $user->id)->whereRaw("DATE_FORMAT(date, '%Y/%m') = ?", [$yesterdayDate])->orderby('date', 'ASC')->get();
+        $attendances = Attendance::where('user_id', $user->id)->whereRaw("DATE_FORMAT(date, '%Y/%m') = ?", [$yesterdayDate])->orderby('date', 'ASC')->get();
         $response = $this->get('/attendance/list?date=' . $yesterdayDate);
         $this->assertAuthenticatedAs($adminUser);
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
@@ -133,10 +133,10 @@ class AdminRecordTest extends TestCase
         $dateString = Carbon::now()->format('Y/m/d');
         $currentDay = Carbon::createFromFormat('Y/m/d', $dateString);
         $today = $currentDay->format('Y/m');
-        $attendances = Attendance::with('approves')->where('user_id', $user->id)->whereRaw("DATE_FORMAT(date, '%Y/%m') = ?", [$today])->orderby('date', 'ASC')->get();
+        $attendances = Attendance::where('user_id', $user->id)->whereRaw("DATE_FORMAT(date, '%Y/%m') = ?", [$today])->orderby('date', 'ASC')->get();
         $response = $this->get('/admin/attendance/list');
         $tomorrowDate = $tomorrow->format('Y/m/d');
-        $attendances = Attendance::with('approves')->where('user_id', $user->id)->whereRaw("DATE_FORMAT(date, '%Y/%m') = ?", [$tomorrowDate])->orderby('date', 'ASC')->get();
+        $attendances = Attendance::where('user_id', $user->id)->whereRaw("DATE_FORMAT(date, '%Y/%m') = ?", [$tomorrowDate])->orderby('date', 'ASC')->get();
         $response = $this->get('/attendance/list?date=' . $tomorrowDate);
         $this->assertAuthenticatedAs($adminUser);
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
