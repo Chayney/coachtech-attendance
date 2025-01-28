@@ -29,37 +29,41 @@
                     <th class="attend-table__header">詳細</th>
                 </tr>
                 @foreach ($attendances as $attendance)
-                    <tr class="attend-table__row">                
-                        <td class="attend-table__item">
-                            {{ \Carbon\Carbon::parse($attendance['date'])->isoFormat("MM/DD(ddd)") }}
-                        </td>
-                        <td class="attend-table__item">
-                            {{ substr($attendance['commute'], 0, 5) }}
-                        </td>
-                        <td class="attend-table__item">
-                            {{ substr($attendance['leave'], 0, 5) }}
-                        </td>
-                        <td class="attend-table__item">
-                            {{ preg_replace('/^0/', '', substr($attendance['break_time'], 0, 5)) }}
-                        </td>
-                        <td class="attend-table__item">
-                            {{ preg_replace('/^0/', '', substr($attendance['work_time'], 0, 5)) }}
-                        </td>
-                        <td class="attend-table__item">
-                            <form action="/attendance/{id}" method="get">
-                                @if(isset($attendance->approves) && $attendance->approves->isNotEmpty())
-                                    <input type="hidden" name="attendance_id" value="{{ $attendance['id'] }}">
-                                    <button type="submit" class="detail-btn" name="id" value="{{ $attendance->approves->first()->id }}">
-                                        <label>詳細</label>
-                                    </button>
-                                @else
-                                    <button type="submit" class="detail-btn" name="id" value="{{ $attendance['id'] }}">
-                                        <label>詳細</label>
-                                    </button>
-                                @endif
-                            </form>
-                        </td>              
-                    </tr>
+                    @if (!empty($attendance->date) && empty($attendance->commute))
+                        <p></p>
+                    @else
+                        <tr class="attend-table__row">                
+                            <td class="attend-table__item">
+                                {{ \Carbon\Carbon::parse($attendance['date'])->isoFormat("MM/DD(ddd)") }}
+                            </td>
+                            <td class="attend-table__item">
+                                {{ substr($attendance['commute'], 0, 5) }}
+                            </td>
+                            <td class="attend-table__item">
+                                {{ substr($attendance['leave'], 0, 5) }}
+                            </td>
+                            <td class="attend-table__item">
+                                {{ preg_replace('/^0/', '', substr($attendance['break_time'], 0, 5)) }}
+                            </td>
+                            <td class="attend-table__item">
+                                {{ preg_replace('/^0/', '', substr($attendance['work_time'], 0, 5)) }}
+                            </td>
+                            <td class="attend-table__item">
+                                <form action="/attendance/{id}" method="get">
+                                    @if(isset($attendance->approves) && $attendance->approves->isNotEmpty())
+                                        <input type="hidden" name="attendance_id" value="{{ $attendance['id'] }}">
+                                        <button type="submit" class="detail-btn" name="id" value="{{ $attendance->approves->first()->id }}">
+                                            <label>詳細</label>
+                                        </button>
+                                    @else
+                                        <button type="submit" class="detail-btn" name="id" value="{{ $attendance['id'] }}">
+                                            <label>詳細</label>
+                                        </button>
+                                    @endif
+                                </form>
+                            </td>              
+                        </tr>
+                    @endif
                 @endforeach              
             </table>
         </div>
