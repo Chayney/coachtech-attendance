@@ -34,6 +34,7 @@ class DateTimeTest extends TestCase
         $response = $this->get('/attendance');
         $now = Carbon::now()->isoFormat("YYYY年MM月DD日(ddd)");
         $response = $this->get('/attendance');
+        $response->assertSee($now);
         $this->assertAuthenticatedAs($user);
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         Status::truncate();
