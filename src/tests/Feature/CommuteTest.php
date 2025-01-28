@@ -98,7 +98,7 @@ class CommuteTest extends TestCase
         $thisMonth = $currentMonth->format('Y/m');
         $lastMonth = $currentMonth->copy()->subMonth()->format('Y/m');
         $nextMonth = $currentMonth->copy()->addMonth()->format('Y/m');
-        $attendances = Attendance::with('approves')->where('user_id', $user->id)->whereRaw("DATE_FORMAT(date, '%Y/%m') = ?", [$thisMonth])->orderby('date', 'ASC')->get();
+        $attendances = Attendance::where('user_id', $user->id)->whereRaw("DATE_FORMAT(date, '%Y/%m') = ?", [$thisMonth])->orderby('date', 'ASC')->get();
         $this->assertTrue($attendances->contains('status_id', $onDutyStatus->id));
         $response = $this->get('/attendance/list');
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
