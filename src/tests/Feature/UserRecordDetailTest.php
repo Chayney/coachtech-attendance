@@ -41,7 +41,7 @@ class UserRecordDetailTest extends TestCase
         $dateString = Carbon::now()->format('Y/m');
         $currentMonth = Carbon::createFromFormat('Y/m', $dateString);
         $thisMonth = $currentMonth->format('Y/m');
-        $attendances = Attendance::with(['approves', 'user'])->where('user_id', $user->id)->whereRaw("DATE_FORMAT(date, '%Y/%m') = ?", [$thisMonth])->orderby('date', 'ASC')->get();
+        $attendances = Attendance::with('user')->where('user_id', $user->id)->whereRaw("DATE_FORMAT(date, '%Y/%m') = ?", [$thisMonth])->orderby('date', 'ASC')->get();
         $response = $this->get('/attendance/list');
         foreach ($attendances as $attendance) {
             $attendanceId = $attendance->id;
@@ -79,7 +79,7 @@ class UserRecordDetailTest extends TestCase
         $dateString = Carbon::now()->format('Y/m');
         $currentMonth = Carbon::createFromFormat('Y/m', $dateString);
         $thisMonth = $currentMonth->format('Y/m');
-        $attendances = Attendance::with(['approves', 'user'])->where('user_id', $user->id)->whereRaw("DATE_FORMAT(date, '%Y/%m') = ?", [$thisMonth])->orderby('date', 'ASC')->get();
+        $attendances = Attendance::where('user_id', $user->id)->whereRaw("DATE_FORMAT(date, '%Y/%m') = ?", [$thisMonth])->orderby('date', 'ASC')->get();
         $response = $this->get('/attendance/list');
         foreach ($attendances as $attendance) {
             $attendanceId = $attendance->id;
@@ -119,7 +119,7 @@ class UserRecordDetailTest extends TestCase
         $dateString = Carbon::now()->format('Y/m');
         $currentMonth = Carbon::createFromFormat('Y/m', $dateString);
         $thisMonth = $currentMonth->format('Y/m');
-        $attendances = Attendance::with(['approves', 'user'])->where('user_id', $user->id)->whereRaw("DATE_FORMAT(date, '%Y/%m') = ?", [$thisMonth])->orderby('date', 'ASC')->get();
+        $attendances = Attendance::where('user_id', $user->id)->whereRaw("DATE_FORMAT(date, '%Y/%m') = ?", [$thisMonth])->orderby('date', 'ASC')->get();
         $response = $this->get('/attendance/list');
         foreach ($attendances as $attendance) {
             $attendanceId = $attendance->id;
@@ -164,7 +164,7 @@ class UserRecordDetailTest extends TestCase
         $dateString = Carbon::now()->format('Y/m');
         $currentMonth = Carbon::createFromFormat('Y/m', $dateString);
         $thisMonth = $currentMonth->format('Y/m');
-        $attendances = Attendance::with(['approves', 'user'])->where('user_id', $user->id)->whereRaw("DATE_FORMAT(date, '%Y/%m') = ?", [$thisMonth])->orderby('date', 'ASC')->get();
+        $attendances = Attendance::where('user_id', $user->id)->whereRaw("DATE_FORMAT(date, '%Y/%m') = ?", [$thisMonth])->orderby('date', 'ASC')->get();
         $response = $this->get('/attendance/list');
         foreach ($attendances as $attendance) {
             $attendanceId = $attendance->id;
