@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('css')
-    <link rel="stylesheet" href="{{ asset('css/admin-index.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/admin_index.css') }}">
 @endsection
 
 @section('content')
@@ -29,31 +29,35 @@
                     <th class="attend-table__header">詳細</th>
                 </tr>
                 @foreach ($attendances as $attendance)
-                    <tr class="attend-table__row">                
-                        <td class="attend-table__item">
-                            {{ $attendance['user']['name'] }}
-                        </td>
-                        <td class="attend-table__item">
-                            {{ substr($attendance['commute'], 0, 5) }}
-                        </td>
-                        <td class="attend-table__item">
-                            {{ substr($attendance['leave'], 0, 5) }}
-                        </td>
-                        <td class="attend-table__item">
-                            {{ preg_replace('/^0/', '', substr($attendance['break_time'], 0, 5)) }}
-                        </td>
-                        <td class="attend-table__item">
-                            {{ preg_replace('/^0/', '', substr($attendance['work_time'], 0, 5)) }}
-                        </td>
-                        <td class="attend-table__item">
-                            <form action="/attendance/{id}" method="get">
-                                <input type="hidden" name="id"  value="{{ $attendance['id'] }}">
-                                <button type="submit" class="detail-btn" name="date" value="{{ $today->format('Y/m/d') }}">
-                                    <label>詳細</label>
-                                </button>
-                            </form>
-                        </td>              
-                    </tr>
+                    @if (!empty($attendance->date) && empty($attendance->commute))
+                        <p></p>
+                    @else
+                        <tr class="attend-table__row">                
+                            <td class="attend-table__item">
+                                {{ $attendance['user']['name'] }}
+                            </td>
+                            <td class="attend-table__item">
+                                {{ substr($attendance['commute'], 0, 5) }}
+                            </td>
+                            <td class="attend-table__item">
+                                {{ substr($attendance['leave'], 0, 5) }}
+                            </td>
+                            <td class="attend-table__item">
+                                {{ preg_replace('/^0/', '', substr($attendance['break_time'], 0, 5)) }}
+                            </td>
+                            <td class="attend-table__item">
+                                {{ preg_replace('/^0/', '', substr($attendance['work_time'], 0, 5)) }}
+                            </td>
+                            <td class="attend-table__item">
+                                <form action="/attendance/{id}" method="get">
+                                    <input type="hidden" name="id"  value="{{ $attendance['id'] }}">
+                                    <button type="submit" class="detail-btn" name="date" value="{{ $today->format('Y/m/d') }}">
+                                        <label>詳細</label>
+                                    </button>
+                                </form>
+                            </td>              
+                        </tr>
+                    @endif
                 @endforeach              
             </table>
         </div>
