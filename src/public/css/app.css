@@ -60,20 +60,6 @@
     font-size: 20px;
 }
 
-.header-nav__white {
-    width: 15%;
-    padding: 5px 3px;
-    background-color: #fff;
-    border-radius: 5px;
-    text-align: center;
-}
-
-.header-item__link {
-    text-decoration: none;
-    color: #000;
-    font-weight: bold;
-}
-
 .alert-success {
     position: fixed;
     padding: 5px 5px 5px 10px;
@@ -112,10 +98,6 @@
         display: initial;
         margin: auto 0;
         width: 60%;
-    }
-
-    .header-nav__white {
-        width: 100%;
     }
 
     .nav-humberger {
