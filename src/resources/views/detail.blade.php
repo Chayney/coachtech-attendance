@@ -103,9 +103,9 @@
                                 <td class="attend-table__header_adjust"></td>
                                 <th class="attend-table__header">日付</th>         
                                 <td class="attend-table__item" colspan="3">
-                                    <input type="text" class="attend-form" name="date_1" value="{{ old('date_1', \Carbon\Carbon::parse($attendance['date'])->isoFormat("YYYY年")) }}">
+                                    <input type="text" class="attend-form" name="date_1" value="{{ old('date_1', \Carbon\Carbon::parse($attendance['approveAttendance']['date'])->isoFormat("YYYY年")) }}">
                                     <label class="form-middle">&emsp;</label>
-                                    <input type="text" class="attend-form" name="date_2" value="{{ old('date_2', \Carbon\Carbon::parse($attendance['date'])->isoFormat("M月D日")) }}">
+                                    <input type="text" class="attend-form" name="date_2" value="{{ old('date_2', \Carbon\Carbon::parse($attendance['approveAttendance']['date'])->isoFormat("M月D日")) }}">
                                     @error('date_1')
                                         <div class="form__error">{{ $message }}</div><br>
                                     @enderror
