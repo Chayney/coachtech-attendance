@@ -48,12 +48,14 @@ class AdminUserRecordTest extends TestCase
         $user = User::factory()->create();
         $today = Carbon::now()->toDateString();
         $commute = Carbon::now();
-        Attendance::create([
+        $commuteClone = $commute->copy();
+        $leave = $commuteClone->modify('+9hour');
+        $attendance = Attendance::create([
             'user_id' => $user->id,
             'status_id' => $status->id,
             'date' => $today,
-            'commute' => $commute,
-            'leave' => $commute->modify('+9hour'),
+            'commute' => $commute->toTimeString(),
+            'leave' => $leave->toTimeString(),
             'break_time' => '01:00:00',
             'work_time' => '08:00:00'
         ]);
@@ -86,12 +88,14 @@ class AdminUserRecordTest extends TestCase
         $user = User::factory()->create();
         $today = Carbon::now();
         $commute = Carbon::now();
-        Attendance::create([
+        $commuteClone = $commute->copy();
+        $leave = $commuteClone->modify('+9hour');
+        $attendance = Attendance::create([
             'user_id' => $user->id,
             'status_id' => $status->id,
             'date' => $today->toDateString(),
-            'commute' => $commute,
-            'leave' => $commute->modify('+9hour'),
+            'commute' => $commute->toTimeString(),
+            'leave' => $leave->toTimeString(),
             'break_time' => '01:00:00',
             'work_time' => '08:00:00'
         ]);
@@ -100,8 +104,8 @@ class AdminUserRecordTest extends TestCase
             'user_id' => $user->id,
             'status_id' => $status->id,
             'date' => $subMonth->toDateString(),
-            'commute' => $commute,
-            'leave' => $commute->modify('+9hour'),
+            'commute' => $commute->toTimeString(),
+            'leave' => $leave->toTimeString(),
             'break_time' => '01:00:00',
             'work_time' => '08:00:00'
         ]);
@@ -138,12 +142,14 @@ class AdminUserRecordTest extends TestCase
         $user = User::factory()->create();
         $today = Carbon::now();
         $commute = Carbon::now();
-        Attendance::create([
+        $commuteClone = $commute->copy();
+        $leave = $commuteClone->modify('+9hour');
+        $attendance = Attendance::create([
             'user_id' => $user->id,
             'status_id' => $status->id,
             'date' => $today->toDateString(),
-            'commute' => $commute,
-            'leave' => $commute->modify('+9hour'),
+            'commute' => $commute->toTimeString(),
+            'leave' => $leave->toTimeString(),
             'break_time' => '01:00:00',
             'work_time' => '08:00:00'
         ]);
@@ -152,8 +158,8 @@ class AdminUserRecordTest extends TestCase
             'user_id' => $user->id,
             'status_id' => $status->id,
             'date' => $addMonth->toDateString(),
-            'commute' => $commute,
-            'leave' => $commute->modify('+9hour'),
+            'commute' => $commute->toTimeString(),
+            'leave' => $leave->toTimeString(),
             'break_time' => '01:00:00',
             'work_time' => '08:00:00'
         ]);
@@ -190,12 +196,14 @@ class AdminUserRecordTest extends TestCase
         $user = User::factory()->create();
         $today = Carbon::now();
         $commute = Carbon::now();
-        Attendance::create([
+        $commuteClone = $commute->copy();
+        $leave = $commuteClone->modify('+9hour');
+        $attendance = Attendance::create([
             'user_id' => $user->id,
             'status_id' => $status->id,
             'date' => $today->toDateString(),
-            'commute' => $commute,
-            'leave' => $commute->modify('+9hour'),
+            'commute' => $commute->toTimeString(),
+            'leave' => $leave->toTimeString(),
             'break_time' => '01:00:00',
             'work_time' => '08:00:00'
         ]);
