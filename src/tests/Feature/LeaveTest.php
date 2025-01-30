@@ -25,18 +25,21 @@ class LeaveTest extends TestCase
         $endDutyStatus = Status::where('name', '退勤済')->first();
         $user = User::factory()->create();
         $today = Carbon::now()->toDateString();
+        $commute = Carbon::now();
         Attendance::create([
             'user_id' => $user->id,
             'status_id' => $onDutyStatus->id,
             'date' => $today,
-            'commute' => Carbon::now()
+            'commute' => $commute->toTimeString()
         ]);
         $this->actingAs($user);
         $response = $this->get('/attendance');
         $response->assertSee('出勤中');
+        $commuteClone = $commute->copy();
+        $leave = $commuteClone->modify('+9hour');
         $response = $this->patch('/leave', [
             'status_id' => $endDutyStatus->id,
-            'leave' => Carbon::now()
+            'leave' => $leave->toTimeString()
         ]);
         $response->assertRedirect('/attendance');
         $response = $this->get('/attendance');
@@ -60,21 +63,24 @@ class LeaveTest extends TestCase
             'user_id' => $user->id,
             'status_id' => $offDutyStatus->id,
             'date' => $today,
-            'commute' => null
+            'commute' => null,
         ]);
         $this->actingAs($user);
         $response = $this->get('/attendance');
         $response->assertSee('勤務外');
+        $commute = Carbon::now();
         $response = $this->post('/commute', [
             'status_id' => $onDutyStatus->id,
-            'commute' => Carbon::now()
+            'commute' => $commute->toTimeString()
         ]);
         $response->assertRedirect('/attendance');
         $response = $this->get('/attendance');
         $response->assertSee('出勤中');
+        $commuteClone = $commute->copy();
+        $leave = $commuteClone->modify('+9hour');
         $response = $this->patch('/leave', [
             'status_id' => $endDutyStatus->id,
-            'leave' => Carbon::now()
+            'leave' => $leave->toTimeString()
         ]);
         $response->assertRedirect('/attendance');
         $response = $this->get('/attendance');
