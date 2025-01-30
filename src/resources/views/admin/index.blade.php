@@ -50,7 +50,7 @@
                             </td>
                             <td class="attend-table__item">
                                 <form action="/attendance/{id}" method="get">
-                                    <input type="hidden" name="id"  value="{{ $attendance['id'] }}">
+                                    <input type="hidden" name="id" value="{{ $attendance['id'] }}">
                                     <button type="submit" class="detail-btn" name="date" value="{{ $today->format('Y/m/d') }}">
                                         <label>詳細</label>
                                     </button>
