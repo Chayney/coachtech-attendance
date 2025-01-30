@@ -26,14 +26,23 @@ class UserRecordTest extends TestCase
         $user = User::factory()->create();
         $today = Carbon::now()->toDateString();
         $commute = Carbon::now();
-        Attendance::create([
+        $commuteClone = $commute->copy();
+        $leave = $commuteClone->modify('+9hour');
+        $attend = Attendance::create([
             'user_id' => $user->id,
             'status_id' => $status->id,
             'date' => $today,
-            'commute' => $commute,
-            'leave' => $commute->modify('+9hour'),
+            'commute' => $commute->toTimeString(),
+            'leave' => $leave->toTimeString(),
             'break_time' => '01:00:00',
             'work_time' => '08:00:00'
+        ]);
+        $startRest = $commuteClone->modify('+1hour');
+        $endRest = $commuteClone->modify('+2hour');
+        Rest::create([
+            'attendance_id' => $attend->id,
+            'start_rest' => $startRest->toTimeString(),
+            'end_rest' => $endRest->toTimeString()
         ]);
         $this->actingAs($user);
         $response = $this->get('/attendance');
@@ -69,11 +78,23 @@ class UserRecordTest extends TestCase
         $user = User::factory()->create();
         $today = Carbon::now()->toDateString();
         $commute = Carbon::now();
-        Attendance::create([
+        $commuteClone = $commute->copy();
+        $leave = $commuteClone->modify('+9hour');
+        $attend = Attendance::create([
             'user_id' => $user->id,
             'status_id' => $status->id,
             'date' => $today,
-            'commute' => null,
+            'commute' => $commute->toTimeString(),
+            'leave' => $leave->toTimeString(),
+            'break_time' => '01:00:00',
+            'work_time' => '08:00:00'
+        ]);
+        $startRest = $commuteClone->modify('+1hour');
+        $endRest = $commuteClone->modify('+2hour');
+        Rest::create([
+            'attendance_id' => $attend->id,
+            'start_rest' => $startRest->toTimeString(),
+            'end_rest' => $endRest->toTimeString()
         ]);
         $this->actingAs($user);
         $response = $this->get('/attendance');
@@ -99,11 +120,23 @@ class UserRecordTest extends TestCase
         $user = User::factory()->create();
         $today = Carbon::now()->toDateString();
         $commute = Carbon::now();
-        Attendance::create([
+        $commuteClone = $commute->copy();
+        $leave = $commuteClone->modify('+9hour');
+        $attend = Attendance::create([
             'user_id' => $user->id,
             'status_id' => $status->id,
             'date' => $today,
-            'commute' => null,
+            'commute' => $commute->toTimeString(),
+            'leave' => $leave->toTimeString(),
+            'break_time' => '01:00:00',
+            'work_time' => '08:00:00'
+        ]);
+        $startRest = $commuteClone->modify('+1hour');
+        $endRest = $commuteClone->modify('+2hour');
+        Rest::create([
+            'attendance_id' => $attend->id,
+            'start_rest' => $startRest->toTimeString(),
+            'end_rest' => $endRest->toTimeString()
         ]);
         $this->actingAs($user);
         $response = $this->get('/attendance');
@@ -129,14 +162,23 @@ class UserRecordTest extends TestCase
         $user = User::factory()->create();
         $today = Carbon::now()->toDateString();
         $commute = Carbon::now();
-        Attendance::create([
+        $commuteClone = $commute->copy();
+        $leave = $commuteClone->modify('+9hour');
+        $attend = Attendance::create([
             'user_id' => $user->id,
             'status_id' => $status->id,
             'date' => $today,
-            'commute' => $commute,
-            'leave' => $commute->modify('+9hour'),
+            'commute' => $commute->toTimeString(),
+            'leave' => $leave->toTimeString(),
             'break_time' => '01:00:00',
             'work_time' => '08:00:00'
+        ]);
+        $startRest = $commuteClone->modify('+1hour');
+        $endRest = $commuteClone->modify('+2hour');
+        Rest::create([
+            'attendance_id' => $attend->id,
+            'start_rest' => $startRest->toTimeString(),
+            'end_rest' => $endRest->toTimeString()
         ]);
         $this->actingAs($user);
         $response = $this->get('/attendance');
