@@ -26,11 +26,12 @@ class RestTest extends TestCase
         $restStatus = Status::where('name', '休憩中')->first();
         $user = User::factory()->create();
         $today = Carbon::now()->toDateString();
+        $commute = Carbon::now();
         $attendance = Attendance::create([
             'user_id' => $user->id,
             'status_id' => $commuteStatus->id,
             'date' => $today,
-            'commute' => Carbon::now()
+            'commute' => $commute->toTimeString()
         ]);
         $this->actingAs($user);
         $response = $this->get('/attendance');
@@ -38,9 +39,11 @@ class RestTest extends TestCase
         $response = $this->post('/rest/start', [
             'status_id' => $restStatus->id
         ]);
+        $commuteClone = $commute->copy();
+        $startRest = $commuteClone->modify('+1hour');
         Rest::create([
             'attendance_id' => $attendance->id,
-            'start_rest' => Carbon::now()
+            'start_rest' => $startRest->toTimeString()
         ]);
         $response->assertRedirect('/attendance');
         $response = $this->get('/attendance');
@@ -59,11 +62,12 @@ class RestTest extends TestCase
         $restStatus = Status::where('name', '休憩中')->first();
         $user = User::factory()->create();
         $today = Carbon::now()->toDateString();
+        $commute = Carbon::now();
         $attendance = Attendance::create([
             'user_id' => $user->id,
             'status_id' => $commuteStatus->id,
             'date' => $today,
-            'commute' => Carbon::now()
+            'commute' => $commute->toTimeString()
         ]);
         $this->actingAs($user);
         $response = $this->get('/attendance');
@@ -71,16 +75,19 @@ class RestTest extends TestCase
         $response = $this->post('/rest/start', [
             'status_id' => $restStatus->id
         ]);
+        $commuteClone = $commute->copy();
+        $startRest = $commuteClone->modify('+1hour');
         $rest = Rest::create([
             'attendance_id' => $attendance->id,
-            'start_rest' => Carbon::now()
+            'start_rest' => $startRest->toTimeString()
         ]);
         $response->assertRedirect('/attendance');
         $response = $this->get('/attendance');
         $response->assertSee('休憩中');
+        $endRest = $commuteClone->modify('+2hour');
         $response = $this->patch('/rest/end', [
             'status_id' => $commuteStatus->id,
-            'end_rest' => Carbon::now()
+            'end_rest' => $endRest->toTimeString()
         ]);
         $response->assertRedirect('/attendance');
         $response = $this->get('/attendance');
@@ -98,11 +105,12 @@ class RestTest extends TestCase
         $restStatus = Status::where('name', '休憩中')->first();
         $user = User::factory()->create();
         $today = Carbon::now()->toDateString();
+        $commute = Carbon::now();
         $attendance = Attendance::create([
             'user_id' => $user->id,
             'status_id' => $commuteStatus->id,
             'date' => $today,
-            'commute' => Carbon::now()
+            'commute' => $commute->toTimeString()
         ]);
         $this->actingAs($user);
         $response = $this->get('/attendance');
@@ -110,16 +118,19 @@ class RestTest extends TestCase
         $response = $this->post('/rest/start', [
             'status_id' => $restStatus->id
         ]);
+        $commuteClone = $commute->copy();
+        $startRest = $commuteClone->modify('+1hour');
         $rest = Rest::create([
             'attendance_id' => $attendance->id,
-            'start_rest' => Carbon::now()
+            'start_rest' => $startRest->toTimeString()
         ]);
         $response->assertRedirect('/attendance');
         $response = $this->get('/attendance');
         $response->assertSee('休憩中');
+        $endRest = $commuteClone->modify('+2hour');
         $response = $this->patch('/rest/end', [
             'status_id' => $commuteStatus->id,
-            'end_rest' => Carbon::now()
+            'end_rest' => $endRest->toTimeString()
         ]);
         $response->assertRedirect('/attendance');
         $response = $this->get('/attendance');
@@ -138,11 +149,12 @@ class RestTest extends TestCase
         $restStatus = Status::where('name', '休憩中')->first();
         $user = User::factory()->create();
         $today = Carbon::now()->toDateString();
+        $commute = Carbon::now();
         $attendance = Attendance::create([
             'user_id' => $user->id,
             'status_id' => $commuteStatus->id,
             'date' => $today,
-            'commute' => Carbon::now()
+            'commute' => $commute->toTimeString()
         ]);
         $this->actingAs($user);
         $response = $this->get('/attendance');
@@ -150,16 +162,19 @@ class RestTest extends TestCase
         $response = $this->post('/rest/start', [
             'status_id' => $restStatus->id
         ]);
+        $commuteClone = $commute->copy();
+        $startRest = $commuteClone->modify('+1hour');
         $rest = Rest::create([
             'attendance_id' => $attendance->id,
-            'start_rest' => Carbon::now()
+            'start_rest' => $startRest->toTimeString()
         ]);
         $response->assertRedirect('/attendance');
         $response = $this->get('/attendance');
         $response->assertSee('休憩中');
+        $endRest = $commuteClone->modify('+2hour');
         $response = $this->patch('/rest/end', [
             'status_id' => $commuteStatus->id,
-            'end_rest' => Carbon::now()
+            'end_rest' => $endRest->toTimeString()
         ]);
         $response->assertRedirect('/attendance');
         $response = $this->get('/attendance');
@@ -167,9 +182,10 @@ class RestTest extends TestCase
         $response = $this->post('/rest/start', [
             'status_id' => $restStatus->id
         ]);
+        $startRest = $commuteClone->modify('+3hour');
         $rest = Rest::create([
             'attendance_id' => $attendance->id,
-            'start_rest' => Carbon::now()
+            'start_rest' => $startRest->toTimeString()
         ]);
         $response->assertRedirect('/attendance');
         $response = $this->get('/attendance');
@@ -188,11 +204,12 @@ class RestTest extends TestCase
         $restStatus = Status::where('name', '休憩中')->first();
         $user = User::factory()->create();
         $today = Carbon::now()->toDateString();
+        $commute = Carbon::now();
         $attendance = Attendance::create([
             'user_id' => $user->id,
             'status_id' => $commuteStatus->id,
             'date' => $today,
-            'commute' => Carbon::now()
+            'commute' => $commute->toTimeString()
         ]);
         $this->actingAs($user);
         $response = $this->get('/attendance');
@@ -200,15 +217,18 @@ class RestTest extends TestCase
         $response = $this->post('/rest/start', [
             'status_id' => $restStatus->id
         ]);
+        $commuteClone = $commute->copy();
+        $startRest = $commuteClone->modify('+1hour');
         $rest = Rest::create([
             'attendance_id' => $attendance->id,
-            'start_rest' => Carbon::now()
+            'start_rest' => $startRest->toTimeString()
         ]);
         $response->assertRedirect('/attendance');
         $response = $this->get('/attendance');
         $response->assertSee('休憩中');
+        $endRest = $commuteClone->modify('+2hour');
         $response = $this->patch('/rest/end', [
-            'end_rest' => Carbon::now(),
+            'end_rest' => $endRest->toTimeString(),
             'break_time' => Rest::selectRaw('SEC_TO_TIME(SUM(TIME_TO_SEC(TIMEDIFF(end_rest, start_rest)))) as totalRestTime')->where('attendance_id', $attendance->id)->first()->totalRestTime,
             'status_id' => $commuteStatus->id,        
         ]);
