@@ -73,18 +73,20 @@ class AttendRequest extends FormRequest
                         }
                     }
                 } else {
-                    try {
-                        $startRest = Carbon::createFromFormat('H:i', $this->start_rest);
-                        $endRest = Carbon::createFromFormat('H:i', $this->end_rest);
-                    } catch (\Exception $e) {
-                        $validator->errors()->add('start_rest', '休憩時間の形式が不正です。');
-                        return;
-                    }
-                    if ($startRest < $commute || $startRest > $leave) {
-                        $validator->errors()->add('start_rest', '休憩時間が勤務時間外です。');
-                    }
-                    if ($startRest >= $endRest) {
-                        $validator->errors()->add('start_rest', '休憩開始時間が休憩終了時間より後になっています。');
+                    if (!empty($this->start_rest) && !empty($this->end_rest)) {
+                        try {
+                            $startRest = Carbon::createFromFormat('H:i', $this->start_rest);
+                            $endRest = Carbon::createFromFormat('H:i', $this->end_rest);
+                        } catch (\Exception $e) {
+                            $validator->errors()->add('start_rest', '休憩時間の形式が不正です。');
+                            return;
+                        }
+                        if ($startRest < $commute || $startRest > $leave) {
+                            $validator->errors()->add('start_rest', '休憩時間が勤務時間外です。');
+                        }
+                        if ($startRest >= $endRest) {
+                            $validator->errors()->add('start_rest', '休憩開始時間が休憩終了時間より後になっています。');
+                        }
                     }
                 }
             }
