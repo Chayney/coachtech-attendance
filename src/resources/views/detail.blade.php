@@ -185,7 +185,7 @@
                         </table>
                     </div>
                     <input type="hidden" name="id" value="{{ $attendance['id'] }}">
-                    <input type="hidden" name="attendance_id" value="{{ $attendance['id'] }}">
+                    <input type="hidden" name="attendance_id" value="{{ $attendance['approveAttendance']['id'] }}">
                     <button class="correct" type="submit" name="status">修正</button>
                 </form>
             @else
