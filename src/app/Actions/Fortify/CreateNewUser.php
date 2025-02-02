@@ -5,10 +5,8 @@ namespace App\Actions\Fortify;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\Rule;
 use Laravel\Fortify\Contracts\CreatesNewUsers;
 use App\Http\Requests\RegisterRequest;
-use Illuminate\Support\Facades\Auth;
 
 class CreateNewUser implements CreatesNewUsers
 {
@@ -25,19 +23,17 @@ class CreateNewUser implements CreatesNewUsers
         $rules = $request->rules();
         $messages = $request->messages();
         $validator = Validator::make($input, $rules, $messages);
-        $validated = $validator->validated();
-
-        return User::create([
+        try {
+            $validated = $validator->validate();
+        } catch (ValidationException $e) {
+            return redirect('/register')->withErrors($e->validator)->withInput();
+        }
+        $user = User::create([
             'name' => $validated['name'],
             'email' => $validated['email'],
             'password' => Hash::make($validated['password']),
         ]);
-        Auth::login($user);
-
-        if ($user->hasRole('admin')) {
-            return redirect()->intended('/admin/login');
-        } else {
-            return redirect()->intended('/login');
-        }
+        
+        return $user;
     }
 }
