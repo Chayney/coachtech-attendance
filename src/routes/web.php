@@ -3,10 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\LoginController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\WorkController;
 use App\Http\Controllers\RestController;
-use App\Http\Controllers\ApplyController;
 use App\Http\Controllers\AdminController;
 
 /*
@@ -21,7 +20,7 @@ use App\Http\Controllers\AdminController;
 */
 
 // ログイン時のカスタムバリデーション設定
-Route::post('/login', [LoginController::class, 'login']);
+Route::post('/login', [AuthController::class, 'login']);
 
 // 管理者専用ログインページ
 Route::get('/admin/login', function () {
@@ -78,4 +77,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 
     // 承認処理
     Route::patch('/approve/update', [AdminController::class, 'update']);
+
+    // CSV出力処理
+    Route::post('/export', [AdminController::class, 'export']);
 });
