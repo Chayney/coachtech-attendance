@@ -59,7 +59,7 @@ Laravel学習のまとめとして作成いたしました。提示された要�
 ![Image](https://github.com/user-attachments/assets/4b07b4fd-d037-452c-b5a4-3e510bb1b599)
 
 ## ER図
-![Image](https://github.com/user-attachments/assets/0a9ea6f5-8e67-422c-8bbc-9086bfafa73a)
+![Image](https://github.com/user-attachments/assets/fb82e5cb-2377-4e24-9d4f-c204d47aaa1f)
 
 ## 環境構築
 
