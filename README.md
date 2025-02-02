@@ -36,6 +36,7 @@ Laravel学習のまとめとして作成いたしました。提示された要�
 ・一般ユーザーは自身の勤怠詳細ページより情報修正を行うと管理者からの承認が下りない限り修正出来ませんのでもし誤修正してしまった場合は管理者にお問い合わせください。   
 ・情報修正に備考欄の入力も必須になっているため入力漏れがないようお願いいたします。  
 ・管理者も一般ユーザーの勤怠情報の修正が可能となっております。  
+・日付の入力は先頭に0を付けて入力すると入力エラーメッセージが表示されるため0を付けないようお願いいたします(例:1月1日)。  
 ・休憩は1日に何回でも登録出来ますが出勤は1日1回のみの登録となっております。  
 ・休憩の有無に関わらず勤怠情報詳細ページに休憩の入力フォームはありますので該当日付の正しい勤務情報の入力をお願いいたします。  
 ・PHPUnitテストを実行した場合statusesテーブルのダミーデータが全て削除されていることがありますのでテスト実行後はシーディングを実行してください。
@@ -51,10 +52,14 @@ Laravel学習のまとめとして作成いたしました。提示された要�
 ・パスワード: password
 
 ## テーブル設計
-
+![Image](https://github.com/user-attachments/assets/99c400a8-8cf7-4d2e-835d-314dfd045c0f)  
+![Image](https://github.com/user-attachments/assets/6d67a9a2-14e9-4387-8d78-953f05a72934)  
+![Image](https://github.com/user-attachments/assets/98a17594-b667-4e2c-a84c-1418eb4c9980)  
+![Image](https://github.com/user-attachments/assets/64b45e12-612b-412b-b785-4f2b17d8c071)  
+![Image](https://github.com/user-attachments/assets/f18078b2-1c37-4fb3-b702-130d2b4efe0b)
 
 ## ER図
-
+![Image](https://github.com/user-attachments/assets/fb82e5cb-2377-4e24-9d4f-c204d47aaa1f)
 
 ## 環境構築
 
