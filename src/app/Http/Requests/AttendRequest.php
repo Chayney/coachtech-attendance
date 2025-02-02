@@ -58,18 +58,20 @@ class AttendRequest extends FormRequest
                 }
                 if (is_array($this->start_rest)) {
                     foreach ($this->start_rest as $key => $startRest) {
-                        try {
-                            $startRestTime = Carbon::createFromFormat('H:i', $startRest);
-                            $endRestTime = Carbon::createFromFormat('H:i', $this->end_rest[$key]);
-                        } catch (\Exception $e) {
-                            $validator->errors()->add("start_rest.{$key}", '休憩時間は00:00形式で入力してください。');
-                            return;
-                        }
-                        if ($startRestTime < $commute || $startRestTime > $leave) {
-                            $validator->errors()->add("start_rest.{$key}", '休憩時間が勤務時間外です。');
-                        }
-                        if ($startRestTime >= $endRestTime) {
-                            $validator->errors()->add("start_rest.{$key}", '休憩開始時間が休憩終了時間より後になっています。');
+                        if (!empty($startRest) && !empty($this->end_rest[$key])) {
+                            try {
+                                $startRestTime = Carbon::createFromFormat('H:i', $startRest);
+                                $endRestTime = Carbon::createFromFormat('H:i', $this->end_rest[$key]);
+                            } catch (\Exception $e) {
+                                $validator->errors()->add("start_rest.{$key}", '休憩時間は00:00形式で入力してください。');
+                                return;
+                            }
+                            if ($startRestTime < $commute || $startRestTime > $leave) {
+                                $validator->errors()->add("start_rest.{$key}", '休憩時間が勤務時間外です。');
+                            }
+                            if ($startRestTime >= $endRestTime) {
+                                $validator->errors()->add("start_rest.{$key}", '休憩開始時間が休憩終了時間より後になっています。');
+                            }
                         }
                     }
                 } else {
