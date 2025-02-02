@@ -101,7 +101,7 @@ class AttendRequest extends FormRequest
             'date_1.required' => '西暦を入力してください。',
             'date_1.date_format' => '西暦はYYYY年形式で入力してください。',
             'date_2.required' => '日付を入力してください。',
-            'date_2.date_format' => '日付はM月D日形式で入力してください。',
+            'date_2.date_format' => '日付は〇月〇日形式で入力してください。',
             'commute.required' => '出勤もしくは退勤時間を入力してください。',
             'commute.date_format' => '出勤もしくは退勤時間は00:00形式で入力してください。',
             'leave.required' => '出勤もしくは退勤時間を入力してください。',
