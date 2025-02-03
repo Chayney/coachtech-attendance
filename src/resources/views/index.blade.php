@@ -9,8 +9,8 @@
         @if (empty($attendance->commute))
             @if ($attendance->status_id == 1)
                 <label class="status"><span>{{ $statuses->where('id', 1)->first()->name }}</span></label>
-                <h2 class="date" id="current-date">{{ \Carbon\Carbon::now()->isoFormat("YYYY年MM月DD日(ddd)") }}</h2>
-                <span class="current" id="current-time">{{ \Carbon\Carbon::now()->format("H:i") }}</span>
+                <h2 class="date" id="current-date"></h2>
+                <span class="current" id="current-time"></span>
                 <form class="commute-btn" action="/commute" method="post">
                     @csrf
                     <input type="hidden" name="user_id">
@@ -20,15 +20,15 @@
         @elseif (!empty($attendance->commute) && !empty($attendance->leave))
             @if ($attendance->status_id == 4)
                 <label class="status"><span>{{ $statuses->where('id', 4)->first()->name }}</span></label>
-                <h2 class="date" id="current-date">{{ \Carbon\Carbon::now()->isoFormat("YYYY年MM月DD日(ddd)") }}</h2>
-                <span class="current" id="current-time">{{ \Carbon\Carbon::now()->format("H:i") }}</span><br>
+                <h2 class="date" id="current-date"></h2>
+                <span class="current" id="current-time"></span><br>
                 <span class="done">お疲れ様でした。</span>
             @endif
         @elseif (!empty($attendance->commute) && !empty($rests->start_rest) && !empty($rests->end_rest))
             @if ($attendance->status_id == 2)
                 <label class="status"><span>{{ $statuses->where('id', 2)->first()->name }}</span></label>
-                <h2 class="date" id="current-date">{{ \Carbon\Carbon::now()->isoFormat("YYYY年MM月DD日(ddd)") }}</h2>
-                <span class="current" id="current-time">{{ \Carbon\Carbon::now()->format("H:i") }}</span>
+                <h2 class="date" id="current-date"></h2>
+                <span class="current" id="current-time"></span>
                 <div class="btn-group">
                     <form class="punch-btn" action="/leave" method="post">
                         @csrf
@@ -44,8 +44,8 @@
         @elseif (!empty($attendance->commute) && empty($rests->start_rest))
             @if ($attendance->status_id == 2)
                 <label class="status"><span>{{ $statuses->where('id', 2)->first()->name }}</span></label>
-                <h2 class="date" id="current-date">{{ \Carbon\Carbon::now()->isoFormat("YYYY年MM月DD日(ddd)") }}</h2>
-                <span class="current" id="current-time">{{ \Carbon\Carbon::now()->format("H:i") }}</span>
+                <h2 class="date" id="current-date"></h2>
+                <span class="current" id="current-time"></span>
                 <div class="btn-group">
                     <form class="punch-btn" action="/leave" method="post">
                         @csrf
@@ -61,8 +61,8 @@
         @elseif (!empty($rests->start_rest) && empty($rests->end_rest))
             @if ($attendance->status_id == 3)
                 <label class="status"><span>{{ $statuses->where('id', 3)->first()->name }}</span></label>
-                <h2 class="date" id="current-date">{{ \Carbon\Carbon::now()->isoFormat("YYYY年MM月DD日(ddd)") }}</h2>
-                <span class="current" id="current-time">{{ \Carbon\Carbon::now()->format("H:i") }}</span>
+                <h2 class="date" id="current-date"></h2>
+                <span class="current" id="current-time"></span>
                 <form class="break-btn" action="/rest/end" method="post">
                     @csrf
                     @method('PATCH')
@@ -75,8 +75,8 @@
         function updateTime() {
             const now = new Date();
             const year = now.getFullYear();
-            const month = String(now.getMonth() + 1).padStart(2, '0');
-            const day = String(now.getDate()).padStart(2, '0');
+            const month = String(now.getMonth() + 1);
+            const day = String(now.getDate());
             const days = ["日", "月", "火", "水", "木", "金", "土"];
             const weekDay = days[now.getDay()];
             const hours = String(now.getHours()).padStart(2, '0');
