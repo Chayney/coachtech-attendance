@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('css')
-    <link rel="stylesheet" href="{{ asset('css/admin-detail.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/admin_detail.css') }}">
 @endsection
 
 @section('content')
@@ -91,7 +91,21 @@
                                 </tr>
                             @endforeach
                         @else
-                            <p></p>
+                            <tr class="attend-table__row">
+                                <td class="attend-table__header_adjust"></td>
+                                <th class="attend-table__header">休憩</th>                             
+                                <td class="attend-table__item" colspan="3">
+                                    <input type="text" class="attend-form" name="start_rest">
+                                    <label class="form-middle">~</label>
+                                    <input type="text" class="attend-form" name="end_rest">
+                                    @if ($errors->has('start_rest'))
+                                        <div class="form__error">{{ $errors->first('start_rest') }}</div>
+                                    @elseif ($errors->has('end_rest'))
+                                        <div class="form__error">{{ $errors->first('end_rest') }}</div>
+                                    @endif
+                                </td>
+                                <td class="attend-form_adjust"></td>                           
+                            </tr>
                         @endif
                         <tr class="attend-table__row">
                             <td class="attend-table__header_adjust"></td>
