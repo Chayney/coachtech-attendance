@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('css')
-    <link rel="stylesheet" href="{{ asset('css/admin-attendance.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/admin_attendance.css') }}">
 @endsection
 
 @section('content')
@@ -32,35 +32,57 @@
                     <th class="attend-table__header">合計</th>
                     <th class="attend-table__header">詳細</th>
                 </tr>
-                @foreach ($attendances as $attendance)                   
-                    <tr class="attend-table__row">                
-                        <td class="attend-table__item">
-                            {{ \Carbon\Carbon::parse($attendance['date'])->isoFormat("MM/DD(ddd)") }}
-                        </td>
-                        <td class="attend-table__item">
-                            {{ substr($attendance['commute'], 0, 5) }}
-                        </td>
-                        <td class="attend-table__item">
-                            {{ substr($attendance['leave'], 0, 5) }}
-                        </td>
-                        <td class="attend-table__item">
-                            {{ preg_replace('/^0/', '', substr($attendance['break_time'], 0, 5)) }}
-                        </td>
-                        <td class="attend-table__item">
-                            {{ preg_replace('/^0/', '', substr($attendance['work_time'], 0, 5)) }}
-                        </td>
-                        <td class="attend-table__item">
-                            <form action="/attendance/{id}" method="get">
-                                <input type="hidden" name="id"  value="{{ $attendance['id'] }}">
-                                <button type="submit" class="detail-btn" name="date" value="{{ \Carbon\Carbon::parse($attendance['date'])->format('Y/m/d') }}">
-                                    <label>詳細</label>
-                                </button>
-                            </form>
-                        </td>              
-                    </tr>
+                @foreach ($attendances as $attendance)
+                    @if (!empty($attendance->date) && empty($attendance->commute))
+                        <p></p>
+                    @else                  
+                        <tr class="attend-table__row">                
+                            <td class="attend-table__item">
+                                {{ \Carbon\Carbon::parse($attendance['date'])->isoFormat("MM/DD(ddd)") }}
+                            </td>
+                            <td class="attend-table__item">
+                                {{ substr($attendance['commute'], 0, 5) }}
+                            </td>
+                            <td class="attend-table__item">
+                                {{ substr($attendance['leave'], 0, 5) }}
+                            </td>
+                            <td class="attend-table__item">
+                                {{ preg_replace('/^0/', '', substr($attendance['break_time'], 0, 5)) }}
+                            </td>
+                            <td class="attend-table__item">
+                                {{ preg_replace('/^0/', '', substr($attendance['work_time'], 0, 5)) }}
+                            </td>
+                            <td class="attend-table__item">
+                                <form action="/attendance/{id}" method="get">
+                                    <input type="hidden" name="id"  value="{{ $attendance['id'] }}">
+                                    <button type="submit" class="detail-btn" name="date" value="{{ \Carbon\Carbon::parse($attendance['date'])->format('Y/m/d') }}">
+                                        <label>詳細</label>
+                                    </button>
+                                </form>
+                            </td>              
+                        </tr>
+                    @endif
                 @endforeach                                  
             </table>
-        </div> 
-        <button class="csv-btn" type="submit" name="status">CSV出力</button>    
+        </div>
+        @php
+            $csvButtonDisplayed = false;
+        @endphp
+        @foreach ($attendances as $attendance)
+            @if (!empty($attendance->date) && empty($attendance->commute))
+                <p></p>
+            @else
+                @if (!$csvButtonDisplayed)
+                    <form action="{{'/export?'.http_build_query(request()->query())}}" method="post">
+                        @csrf
+                        <input type="hidden" name="user_id" value="{{ $attendance['user_id'] }}">
+                        <button class="csv-btn" type="submit" name="date" value="{{ $thisMonth }}">CSV出力</button>
+                    </form>
+                    @php
+                        $csvButtonDisplayed = true;
+                    @endphp
+                @endif
+            @endif
+        @endforeach    
     </div>
 @endsection
