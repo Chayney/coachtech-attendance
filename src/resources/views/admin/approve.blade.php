@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('css')
-    <link rel="stylesheet" href="{{ asset('css/admin-approve.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/admin_approve.css') }}">
 @endsection
 
 @section('content')
@@ -51,9 +51,9 @@
                                         <th class="attend-table__header-approve">休憩</th>
                                     @endif                               
                                     <td class="attend-table__item-approve" colspan="3">
-                                        <label class="approve-item">{{ $rest['start_rest'] }}</label>
+                                        <label class="approve-item">{{ substr($rest['start_rest'], 0, 5) }}</label>
                                         <label class="approve-middle">~</label>
-                                        <label class="approve-item">{{ $rest['end_rest'] }}</label>                     
+                                        <label class="approve-item">{{ substr($rest['end_rest'], 0, 5) }}</label>                     
                                     </td>
                                     <td class="attend-table__item_adjust"></td>                           
                                 </tr>
@@ -72,7 +72,16 @@
                                 </tr>
                             @endforeach
                         @else
-                            <p></p>
+                            <tr class="attend-table__row">
+                                <td class="attend-table__header_adjust"></td>
+                                <th class="attend-table__header-approve">休憩</th>                             
+                                <td class="attend-table__item-approve" colspan="3">
+                                    <label class="approve-item"></label>
+                                    <label class="approve-middle"></label>
+                                    <label class="approve-item"></label>
+                                </td>
+                                <td class="attend-table__item_adjust"></td>                           
+                            </tr>
                         @endif
                         <tr class="attend-table__row">
                             <td class="attend-table__header_adjust"></td>
@@ -152,7 +161,16 @@
                                     </tr>
                                 @endforeach
                             @else
-                                <p></p>
+                                <tr class="attend-table__row">
+                                    <td class="attend-table__header_adjust"></td>
+                                    <th class="attend-table__header-approve">休憩</th>                             
+                                    <td class="attend-table__item-approve" colspan="3">
+                                        <label class="approve-item"></label>
+                                        <label class="approve-middle"></label>
+                                        <label class="approve-item"></label>
+                                    </td>
+                                    <td class="attend-table__item_adjust"></td>                           
+                                </tr>
                             @endif
                             <tr class="attend-table__row">
                                 <td class="attend-table__header_adjust"></td>
