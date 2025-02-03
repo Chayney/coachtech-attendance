@@ -21,7 +21,7 @@ class AuthController extends Controller
         }
 
         return back()->withInput($request->only('email'))->withErrors([
-            'password' => 'ログイン情報が登録されていません',
+            'email' => 'ログイン情報が登録されていません',
         ]);
     }
 }
