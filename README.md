@@ -64,6 +64,7 @@ Laravel学習のまとめとして作成いたしました。提示された要�
 ## 環境構築
 
 ### コマンドライン上
+$git clone https://github.com/Chayney/coachtech-attendance.git  
 $docker-compose up -d --build  
 $docker-compose exec php bash
 
