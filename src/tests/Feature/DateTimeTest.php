@@ -32,9 +32,11 @@ class DateTimeTest extends TestCase
         ]);
         $this->actingAs($user);
         $response = $this->get('/attendance');
-        $now = Carbon::now()->isoFormat("YYYY年MM月DD日(ddd)");
+        $nowDate = Carbon::now()->isoFormat("YYYY年");
+        $nowTime = Carbon::now()->isoFormat("MM月DD日(ddd)");
         $response = $this->get('/attendance');
-        $response->assertSee($now);
+        $response->assertSee($nowDate);
+        $response->assertSee($nowTime);
         $this->assertAuthenticatedAs($user);
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         Status::truncate();
