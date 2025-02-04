@@ -9,8 +9,8 @@
         @if (empty($attendance->commute))
             @if ($attendance->status_id == 1)
                 <label class="status"><span>{{ $statuses->where('id', 1)->first()->name }}</span></label>
-                <h2 class="date" id="current-date"></h2>
-                <span class="current" id="current-time"></span>
+                <h2 class="date" id="current-date">{{ \Carbon\Carbon::now()->isoFormat("YYYY年") }}</h2>
+                <span class="current" id="current-time">{{ \Carbon\Carbon::now()->isoFormat("MM月DD日(ddd)") }}</span>
                 <form class="commute-btn" action="/commute" method="post">
                     @csrf
                     <input type="hidden" name="user_id">
@@ -20,15 +20,15 @@
         @elseif (!empty($attendance->commute) && !empty($attendance->leave))
             @if ($attendance->status_id == 4)
                 <label class="status"><span>{{ $statuses->where('id', 4)->first()->name }}</span></label>
-                <h2 class="date" id="current-date"></h2>
-                <span class="current" id="current-time"></span><br>
+                <h2 class="date" id="current-date">{{ \Carbon\Carbon::now()->isoFormat("YYYY年") }}</h2>
+                <span class="current" id="current-time">{{ \Carbon\Carbon::now()->isoFormat("MM月DD日(ddd)") }}</span><br>
                 <span class="done">お疲れ様でした。</span>
             @endif
         @elseif (!empty($attendance->commute) && !empty($rests->start_rest) && !empty($rests->end_rest))
             @if ($attendance->status_id == 2)
                 <label class="status"><span>{{ $statuses->where('id', 2)->first()->name }}</span></label>
-                <h2 class="date" id="current-date"></h2>
-                <span class="current" id="current-time"></span>
+                <h2 class="date" id="current-date">{{ \Carbon\Carbon::now()->isoFormat("YYYY年") }}</h2>
+                <span class="current" id="current-time">{{ \Carbon\Carbon::now()->isoFormat("MM月DD日(ddd)") }}</span>
                 <div class="btn-group">
                     <form class="punch-btn" action="/leave" method="post">
                         @csrf
@@ -44,8 +44,8 @@
         @elseif (!empty($attendance->commute) && empty($rests->start_rest))
             @if ($attendance->status_id == 2)
                 <label class="status"><span>{{ $statuses->where('id', 2)->first()->name }}</span></label>
-                <h2 class="date" id="current-date"></h2>
-                <span class="current" id="current-time"></span>
+                <h2 class="date" id="current-date">{{ \Carbon\Carbon::now()->isoFormat("YYYY年") }}</h2>
+                <span class="current" id="current-time">{{ \Carbon\Carbon::now()->isoFormat("MM月DD日(ddd)") }}</span>
                 <div class="btn-group">
                     <form class="punch-btn" action="/leave" method="post">
                         @csrf
@@ -61,8 +61,8 @@
         @elseif (!empty($rests->start_rest) && empty($rests->end_rest))
             @if ($attendance->status_id == 3)
                 <label class="status"><span>{{ $statuses->where('id', 3)->first()->name }}</span></label>
-                <h2 class="date" id="current-date"></h2>
-                <span class="current" id="current-time"></span>
+                <h2 class="date" id="current-date">{{ \Carbon\Carbon::now()->isoFormat("YYYY年") }}</h2>
+                <span class="current" id="current-time">{{ \Carbon\Carbon::now()->isoFormat("MM月DD日(ddd)") }}</span>
                 <form class="break-btn" action="/rest/end" method="post">
                     @csrf
                     @method('PATCH')
