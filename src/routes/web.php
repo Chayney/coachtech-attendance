@@ -7,6 +7,8 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\WorkController;
 use App\Http\Controllers\RestController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AdminUpdateController;
+use App\Http\Controllers\UpdateController;
 
 /*
 |--------------------------------------------------------------------------
@@ -46,7 +48,7 @@ Route::middleware(['auth'])->group(function () {
             return app('App\Http\Controllers\WorkController')->detail($request);
         }
     });
-    Route::patch('/attendance/update', [WorkController::class, 'update']);
+    Route::patch('/attendance/update', [UpdateController::class, 'update']);
 
     // 申請一覧ページ(一般ユーザーと管理者が同様のURLを使用しているため)
     Route::get('/stamp_correction_request/list', function () {
@@ -64,7 +66,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/attendance/list', [AdminController::class, 'index']);
 
     // 管理者用勤怠修正処理
-    Route::patch('/admin/attendance/update', [AdminController::class, 'renew']);
+    Route::patch('/admin/attendance/update', [AdminUpdateController::class, 'renew']);
 
     // スタッフ一覧ページ
     Route::get('/admin/staff/list', [AdminController::class, 'show']);
